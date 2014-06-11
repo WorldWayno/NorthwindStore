@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7EEFC5
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Web", "Northwind.Web\Northwind.Web.csproj", "{274C4919-0396-47F2-93A0-D6F4F5C1A71B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.Model", "Northwind.Model\Northwind.Model.csproj", "{D919B5CE-52F5-4713-8A8B-EE063622D16B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +32,14 @@ Global
 		{465891FD-3437-44A0-8E64-53C688EB684B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{465891FD-3437-44A0-8E64-53C688EB684B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{465891FD-3437-44A0-8E64-53C688EB684B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{274C4919-0396-47F2-93A0-D6F4F5C1A71B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{274C4919-0396-47F2-93A0-D6F4F5C1A71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{274C4919-0396-47F2-93A0-D6F4F5C1A71B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{274C4919-0396-47F2-93A0-D6F4F5C1A71B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D919B5CE-52F5-4713-8A8B-EE063622D16B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D919B5CE-52F5-4713-8A8B-EE063622D16B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D919B5CE-52F5-4713-8A8B-EE063622D16B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D919B5CE-52F5-4713-8A8B-EE063622D16B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
