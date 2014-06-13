@@ -6,6 +6,7 @@ using Microsoft.Owin;
 using System.Web.Http;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.Practices.Unity;
 using Owin;
 
 [assembly : OwinStartup(typeof(Northwind.Api.AppStart.Startup))]
@@ -18,10 +19,19 @@ namespace Northwind.Api.AppStart
             ConfigureOAuth(app);
 
             var config = new HttpConfiguration();
+
+            //var container = new UnityContainer();
+            //container.RegisterType<IProductRepository, ProductRepository>(new HierarchicalLifetimeManager());
+            //config.DependencyResolver = new UnityResolver(container);
+
+            UnityConfig.RegisterComponents(config);
             WebApiConfig.Register(config);
 
             app.UseCors(CorsOptions.AllowAll);
+
             app.UseWebApi(config);
+
+              
         }
 
         public void ConfigureOAuth(IAppBuilder app)
