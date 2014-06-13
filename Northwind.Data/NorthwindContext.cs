@@ -4,6 +4,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Northwind.Data.Mapping;
+using Northwind.Model;
 
 namespace Northwind.Data
 {
@@ -23,11 +25,12 @@ namespace Northwind.Data
 
         public NorthwindContext() : base("NorthwindConnection")
         {
-            
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            modelBuilder.Configurations.Add(new EmployeeMap());
             base.OnModelCreating(modelBuilder);
         }
     }
