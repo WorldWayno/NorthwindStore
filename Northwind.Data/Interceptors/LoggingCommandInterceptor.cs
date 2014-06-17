@@ -12,11 +12,12 @@ using Microsoft.Owin.Logging;
 
 namespace Northwind.Data.Interceptors
 {
-    internal class LogCommandInterceptor : IDbCommandInterceptor
+    internal class DbCommandInterceptor : IDbCommandInterceptor
     {
         private static ILogger logger = LoggerFactory.Default.Create("s");
-        private static readonly Regex _tableAliasRegex =
-     new Regex(@"(?<tableAlias>AS \[Extent\d+\](?! WITH \(NOLOCK\)))",
+
+        private static readonly Regex TableAliasRegex =
+     new Regex(@"(?<table>AS \[Extent\d+\](?! WITH \(NOLOCK\)))",
          RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
         public void NonQueryExecuted(System.Data.Common.DbCommand command, DbCommandInterceptionContext<int> interceptionContext)
@@ -36,7 +37,7 @@ namespace Northwind.Data.Interceptors
 
         public void ReaderExecuting(System.Data.Common.DbCommand command, DbCommandInterceptionContext<System.Data.Common.DbDataReader> interceptionContext)
         {
-            command.CommandText = _tableAliasRegex.Replace(command.CommandText, "${tableAlias} WITH (NOLOCK)");
+            command.CommandText = TableAliasRegex.Replace(command.CommandText, "${table} WITH (NOLOCK)");
             LogCommand(command, interceptionContext);
         }
 

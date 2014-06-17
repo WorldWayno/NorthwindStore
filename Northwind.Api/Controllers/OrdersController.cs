@@ -19,7 +19,9 @@ namespace Northwind.Api.Controllers
         {
             _repository = repository;
         }
-        //[Authorize]
+
+
+        [AllowAnonymous]
         [Route("")]
         public IHttpActionResult Get()
         {

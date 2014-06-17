@@ -7,7 +7,7 @@ namespace Northwind.Data
     {
         public ContextConfig()
         {
-            AddInterceptor(new LogCommandInterceptor());
+            AddInterceptor(new DbCommandInterceptor());
 
             SetDatabaseInitializer<NorthwindContext>(null);
         }

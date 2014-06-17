@@ -129,6 +129,9 @@
     <Reference Include="Unity.WebApi">
       <HintPath>..\packages\Unity.WebAPI.5.1\lib\net45\Unity.WebApi.dll</HintPath>
     </Reference>
+    <Reference Include="WebApi.AuthenticationFilter">
+      <HintPath>..\packages\WebApi.AuthenticationFilter.1.0.0.0\lib\net45\WebApi.AuthenticationFilter.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http.Formatting">
@@ -148,6 +151,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AuthenticationFilter.cs" />
     <Compile Include="App_Start\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />

@@ -16,7 +16,7 @@ namespace Northwind.Data
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
 
-            this.Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
+           // this.Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -5,6 +5,7 @@ using System.Web;
 using Microsoft.Owin;
 using System.Web.Http;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity;
 using Owin;
@@ -19,10 +20,6 @@ namespace Northwind.Api.AppStart
             ConfigureOAuth(app);
 
             var config = new HttpConfiguration();
-
-            //var container = new UnityContainer();
-            //container.RegisterType<IProductRepository, ProductRepository>(new HierarchicalLifetimeManager());
-            //config.DependencyResolver = new UnityResolver(container);
 
             UnityConfig.RegisterComponents(config);
             WebApiConfig.Register(config);
@@ -46,6 +43,7 @@ namespace Northwind.Api.AppStart
 
             // Token Generation
             app.UseOAuthAuthorizationServer(oAuthServerOptions);
+            //app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
 
         }

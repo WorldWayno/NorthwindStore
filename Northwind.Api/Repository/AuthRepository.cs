@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Northwind.Api.Models;
 using System;
@@ -33,6 +34,10 @@ namespace Northwind.Api.Repository
             return result;
         }
 
+        public async Task<ClaimsIdentity> CreateIdentityAsync(IdentityUser user, string authenticationType)
+        {
+            return await _userManager.CreateIdentityAsync(user, authenticationType);
+        }
         public async Task<IdentityUser> FindUser(string userName, string password)
         {
             IdentityUser user = await _userManager.FindAsync(userName, password);
