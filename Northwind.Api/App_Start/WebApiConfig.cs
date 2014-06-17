@@ -12,10 +12,12 @@ namespace Northwind.Api
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            config.Filters.Add(new AuthenticationFilter());
+            //config.Filters.Add(new AuthenticationFilter());
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            config.EnableQuerySupport();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

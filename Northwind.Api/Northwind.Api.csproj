@@ -166,6 +166,10 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AuthRepository.cs" />
+    <Compile Include="Security\BasicAuthenticationHandler.cs" />
+    <Compile Include="Security\BasicAuthenticationMiddleware.cs" />
+    <Compile Include="Security\BasicAuthenticationOptions.cs" />
+    <Compile Include="Security\BasicAuthnMiddlewareExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

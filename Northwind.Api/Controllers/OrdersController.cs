@@ -21,7 +21,7 @@ namespace Northwind.Api.Controllers
         }
 
 
-        [AllowAnonymous]
+        [Authorize]
         [Route("")]
         public IHttpActionResult Get()
         {

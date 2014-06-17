@@ -12,7 +12,7 @@ using Microsoft.Owin.Logging;
 
 namespace Northwind.Data.Interceptors
 {
-    internal class DbCommandInterceptor : IDbCommandInterceptor
+    internal class LoggingCommandInterceptor : IDbCommandInterceptor
     {
         private static ILogger logger = LoggerFactory.Default.Create("s");
 
