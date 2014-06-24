@@ -39,7 +39,7 @@ namespace Northwind.Api.Controllers
                 return errorResult;
             }
 
-            return Ok();
+            return Ok(result);
         }
 
         protected override void Dispose(bool disposing)

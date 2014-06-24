@@ -11,6 +11,7 @@ namespace Northwind.Api.Models
     {
         [Required]
         [Display(Name = "User name")]
+        [DataType(DataType.EmailAddress)]
         public string UserName { get; set; }
 
         [Required]

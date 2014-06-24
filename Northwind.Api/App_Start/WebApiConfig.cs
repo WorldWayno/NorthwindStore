@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Serialization;
+﻿using System.Web.Http.Cors;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +15,29 @@ namespace Northwind.Api
             // Web API configuration and services
             //config.Filters.Add(new AuthenticationFilter());
 
-            // Web API routes
+            // Cors
+            config.EnableCors();
+
+            // attribute routing
             config.MapHttpAttributeRoutes();
 
+            // OData support
             config.EnableQuerySupport();
+
+            // Routes
+            config.Routes.MapHttpRoute(
+                name: "VersionedtApi",
+                routeTemplate: "api/v{version}/{controller}/{id}",
+                defaults: new {version = 1, id = RouteParameter.Optional }
+            );
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                defaults: new { id = RouteParameter.Optional}
+                );
 
+            // Formatters
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }

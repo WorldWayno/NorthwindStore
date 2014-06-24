@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Infrastructure;
@@ -32,11 +34,12 @@ namespace Northwind.Api.Security
             {
                 return null;
             }
-            else
-            {
-                var id = new ClaimsIdentity(claims, Options.AuthenticationType);
-                return new AuthenticationTicket(id, new AuthenticationProperties());
-            }
+
+            var id = new ClaimsIdentity(claims, Options.AuthenticationType);
+            var principal = new ClaimsPrincipal(id);
+            Thread.CurrentPrincipal = principal;
+
+            return new AuthenticationTicket(id, new AuthenticationProperties());
         }
 
         protected override Task ApplyResponseChallengeAsync()
@@ -49,7 +52,6 @@ namespace Northwind.Api.Security
                     Response.Headers.AppendValues("WWW-Authenticate", _challenge);
                 }
             }
-
             return Task.FromResult<object>(null);
         }
 

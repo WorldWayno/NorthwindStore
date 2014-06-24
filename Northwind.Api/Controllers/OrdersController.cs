@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Web;
+using System.Linq.Expressions;
+using System.Net.Http;
 using System.Web.Http;
-using Northwind.Api.Models;
+using System.Web.Http.Results;
 using Northwind.Data;
 using Northwind.Model;
 
 namespace Northwind.Api.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/orders")]
     public class OrdersController : ApiController
     {
@@ -21,7 +24,7 @@ namespace Northwind.Api.Controllers
         }
 
 
-        [Authorize]
+        
         [Route("")]
         public IHttpActionResult Get()
         {
@@ -29,9 +32,21 @@ namespace Northwind.Api.Controllers
             return Ok(orders);
         }
 
-        private IEnumerable<Order> FetchOrders()
+        [Route("{id:int}")]
+        public IHttpActionResult Get(int id)
         {
-            return _repository.Queryable().ToList();
+            var result = FetchOrders(o => o.OrderID == id);
+            if(result == null || !result.Any())
+                return NotFound();
+
+            return Ok(result);
+        }
+
+        private IEnumerable<Order> FetchOrders(Expression<Func<Order,bool>> predicate = null)
+        {
+            if (predicate == null) return _repository.Queryable();
+
+            return _repository.Queryable().Where(predicate);
         }
     }
 }
