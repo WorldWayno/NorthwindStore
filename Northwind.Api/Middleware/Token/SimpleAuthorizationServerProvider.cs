@@ -30,26 +30,28 @@ namespace Northwind.Api.Middleware.Token
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
 
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] {"*"});
 
             using (var repo = new AuthRepository())
             {
                 IdentityUser user = await repo.FindUser(context.UserName, context.Password);
-
-                if (user != null)
+                if (user == null)
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                }
+                else
                 {
                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
                     identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
                     identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
                     var principal = new ClaimsPrincipal(identity);
                     Thread.CurrentPrincipal = principal;
-                    context.Validated();
+                    context.Validated(identity);
                 }
             }
 
-            context.SetError("invalid_grant", "The user name or password is incorrect.");
-            //context.Validated(identity);
+            context.Validated();
 
         }
     }

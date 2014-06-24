@@ -49,7 +49,7 @@ namespace Northwind.Api.AppStart
             var oAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(1),
                 Provider = new SimpleAuthorizationServerProvider()
             };
 
@@ -65,6 +65,11 @@ namespace Northwind.Api.AppStart
 
             app.SetDefaultSignInAsAuthenticationType("Basic");
             app.UseBasicAuthentication(new BasicAuthenticationOptions("demo", ValidateBasicUser));
+            //app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions()
+            //{
+            //    AccessTokenExpireTimeSpan = TimeSpan.FromDays(1)
+
+            //});
 
 
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
