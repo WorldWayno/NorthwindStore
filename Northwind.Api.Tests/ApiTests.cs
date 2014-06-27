@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
 using Northwind.Api.Models;
+using Northwind.Api.Tests.Helpers;
 using Northwind.Model;
 using NUnit.Framework;
 
@@ -48,7 +49,7 @@ namespace Northwind.Api.Tests
             {
                 client.BaseAddress = new Uri(uri);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = CreateBasicHeader("wlewalski@comcast.net", "Wayne!");
+               // client.SetBasicAuthentication("wlewalski@comcast.net", "Wayne!");
 
                 var model = new OrderModel()
                 {
@@ -57,9 +58,26 @@ namespace Northwind.Api.Tests
                     IsShipped = true
                 };
 
-                HttpResponseMessage response = client.PostAsJsonAsync("api/orders", model).Result;
 
-                Assert.IsTrue(response.IsSuccessStatusCode);
+                var values = new Dictionary<string, string>
+                {
+                    {"username", "wlewalski@comcast.net"},
+                    {"password", "Wayne!"},
+                    {"grant_type", "password"}
+                };
+
+                var r2 = client.PostFormData("token", values).Result;
+
+
+                Assert.IsTrue(r2.IsSuccessStatusCode);
+
+                var token = r2.Content.ReadAsStringAsync().Result;
+
+               HttpResponseMessage response = client.PostAsJsonAsync("api/orders", model).Result;
+
+              
+
+           
 
                 var content = response.Content.ReadAsStringAsync().Result;
 
