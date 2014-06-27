@@ -3,21 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Northwind.Api.Tests.Helpers
 {
     public class TokenResponse
     {
-        public string Content { get; set; }
+        [JsonProperty("access_token")]
+        public string AccessToken { get; set; }
 
-        public HttpStatusCode StatusCode { get; set; }
+        [JsonProperty("token_type")]
+        public string TokenType { get; set; }
 
-        public string ReasonPhrase { get; set; }
-
-        public TokenResponse(HttpStatusCode statusCode, string reasonPhrase)
-        {
-            this.StatusCode = statusCode;
-            this.ReasonPhrase = reasonPhrase;
-        }
+        [JsonProperty("expires_in")]
+        public int ExpiresIn { get; set; }
     }
 }

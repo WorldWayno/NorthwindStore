@@ -10,18 +10,25 @@ namespace Northwind.Api.Tests.Helpers
 {
     public class HttpHelper
     {
-        public static async Task<TokenResponse> PostFormData(HttpClient client, string url, Dictionary<string, string> formData)
+        public static async Task<TokenResponse> GetTokenAsync(HttpClient client, string username, string password)
         {
-            var response = await client.PostAsync(string.Empty, new FormUrlEncodedContent(formData)).ConfigureAwait(false);
 
-            var token = new TokenResponse(response.StatusCode,response.ReasonPhrase);
- 
+            var formData = new Dictionary<string, string>
+            {
+                {"username", username},
+                {"password", password},
+                {"grant_type", "password"}
+            };
+
+            var response = await client.PostAsJsonAsync("token", new FormUrlEncodedContent(formData));
+
+
             if (response.IsSuccessStatusCode)
             {  
-                token.Content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+               var result = response.Content.ReadAsStringAsync().Result;
             }
 
-            return token;
+            return null;
         }
 
     }

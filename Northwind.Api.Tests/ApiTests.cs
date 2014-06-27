@@ -25,7 +25,7 @@ namespace Northwind.Api.Tests
             {
                 client.BaseAddress = new Uri(uri);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = CreateBasicHeader("wlewalski@comcast.net", "Wayne!");
+                client.SetBasicAuthentication("wlewalski@comcast.net","Wayne!");
 
                 HttpResponseMessage response = client.GetAsync("api/orders").Result;
 
@@ -49,7 +49,7 @@ namespace Northwind.Api.Tests
             {
                 client.BaseAddress = new Uri(uri);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-               // client.SetBasicAuthentication("wlewalski@comcast.net", "Wayne!");
+                client.SetBasicAuthentication("wlewalski@comcast.net", "Wayne!");
 
                 var model = new OrderModel()
                 {
@@ -58,26 +58,9 @@ namespace Northwind.Api.Tests
                     IsShipped = true
                 };
 
+                HttpResponseMessage response = client.PostAsJsonAsync("api/orders", model).Result;
 
-                var values = new Dictionary<string, string>
-                {
-                    {"username", "wlewalski@comcast.net"},
-                    {"password", "Wayne!"},
-                    {"grant_type", "password"}
-                };
-
-                var r2 = client.PostFormData("token", values).Result;
-
-
-                Assert.IsTrue(r2.IsSuccessStatusCode);
-
-                var token = r2.Content.ReadAsStringAsync().Result;
-
-               HttpResponseMessage response = client.PostAsJsonAsync("api/orders", model).Result;
-
-              
-
-           
+                Assert.IsTrue(response.IsSuccessStatusCode);
 
                 var content = response.Content.ReadAsStringAsync().Result;
 
@@ -89,10 +72,35 @@ namespace Northwind.Api.Tests
             }
         }
 
-        public AuthenticationHeaderValue CreateBasicHeader(string username, string password)
+        [Test]
+        public void Http_Post_Token()
         {
-            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(username + ":" + password);
-            return new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+            var uri = "http://localhost/NortwindApi/";
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(uri);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                var formValues = new Dictionary<string, string>
+                {
+                    {"username", "wlewalski@comcast.net"},
+                    {"password", "Wayne!"},
+                    {"grant_type", "password"}
+                };
+
+                var response = client.PostFormData("token", formValues).Result;
+
+                Assert.IsTrue(response.IsSuccessStatusCode);
+
+                var content = response.Content.ReadAsStringAsync().Result;
+
+                Assert.IsTrue(!String.IsNullOrEmpty(content));
+
+                var token = JsonConvert.DeserializeObject<TokenResponse>(content);
+
+                Assert.IsNotNull(token);
+            }
         }
     }
 }
