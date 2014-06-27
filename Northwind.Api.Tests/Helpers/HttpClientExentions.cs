@@ -33,7 +33,7 @@ namespace Northwind.Api.Tests
             return await client.PostAsync(url, new FormUrlEncodedContent(formData)).ConfigureAwait(true);
         }
 
-        public static async Task<TokenResponse> GetTokenAsync(this HttpClient client, string username, string password)
+        public static TokenResponse GetTokenAsync(this HttpClient client, string username, string password)
         {
 
             var formData = new Dictionary<string, string>
@@ -43,7 +43,7 @@ namespace Northwind.Api.Tests
                 {"grant_type", "password"}
             };
 
-            var response = await client.PostAsync("token", new FormUrlEncodedContent(formData));
+            var response = client.PostFormData("token", formData).Result;
 
 
             if (!response.IsSuccessStatusCode) return null;

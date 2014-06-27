@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Northwind.Api.Models;
-using Northwind.Api.Tests.Helpers;
 using Northwind.Model;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Northwind.Api.Tests
 {
-    [TestFixture]
-    public class OrdersApiTests
+    public class OrdersApiTests : TestBase
     {
         [Test]
         public void Http_Get_Orders()
@@ -25,7 +20,7 @@ namespace Northwind.Api.Tests
             {
                 client.BaseAddress = new Uri(uri);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.SetBasicAuthentication("wlewalski@comcast.net","Wayne!");
+                client.SetBasicAuthentication("wlewalski@comcast.net", "Wayne!");
 
                 HttpResponseMessage response = client.GetAsync("api/orders").Result;
 
@@ -81,23 +76,24 @@ namespace Northwind.Api.Tests
                 client.BaseAddress = new Uri(uri);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                var token = client.GetTokenAsync("wlewalski@comcast.net", "Wayne!");
 
-                var formValues = new Dictionary<string, string>
-                {
-                    {"username", "wlewalski@comcast.net"},
-                    {"password", "Wayne!"},
-                    {"grant_type", "password"}
-                };
+                //var formValues = new Dictionary<string, string>
+                //{
+                //    {"username", "wlewalski@comcast.net"},
+                //    {"password", "Wayne!"},
+                //    {"grant_type", "password"}
+                //};
 
-                var response = client.PostFormData("token", formValues).Result;
+                //var response = client.PostFormData("token", formValues).Result;
 
-                Assert.IsTrue(response.IsSuccessStatusCode);
+                //Assert.IsTrue(response.IsSuccessStatusCode);
 
-                var content = response.Content.ReadAsStringAsync().Result;
+                //var content = response.Content.ReadAsStringAsync().Result;
 
-                Assert.IsTrue(!String.IsNullOrEmpty(content));
+                //Assert.IsTrue(!String.IsNullOrEmpty(content));
 
-                var token = JsonConvert.DeserializeObject<TokenResponse>(content);
+                //var token = JsonConvert.DeserializeObject<TokenResponse>(content);
 
                 Assert.IsNotNull(token);
             }

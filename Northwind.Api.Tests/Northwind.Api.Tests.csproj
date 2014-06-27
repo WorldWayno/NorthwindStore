@@ -73,6 +73,7 @@
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\TokenResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
