@@ -40,7 +40,5 @@ namespace Northwind.Data
         {
             return base.Set<TEntity>();
         }
-
-        public System.Data.Entity.DbSet<Northwind.Model.Employee> Employees { get; set; }
     }
 }

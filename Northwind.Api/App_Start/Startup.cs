@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using System.Web.Http;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.DataHandler;
+using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity;
+using Northwind.Api.Areas.HelpPage.App_Start;
 using Northwind.Api.Middleware.Token;
 using Northwind.Api.Repository;
 using Northwind.Api.Security;
@@ -30,6 +35,12 @@ namespace Northwind.Api.AppStart
             // force token authentication
             //config.SuppressDefaultHostAuthentication();
 
+            HelpPageConfig.Register(config);
+
+            AreaRegistration.RegisterAllAreas();
+
+       
+
             ConfigureOAuth(app);
 
 
@@ -37,7 +48,11 @@ namespace Northwind.Api.AppStart
 
             WebApiConfig.Register(config);
 
+            var hubConfiguration = new HubConfiguration { EnableDetailedErrors = true, EnableJavaScriptProxies = true };
+
             app.UseCors(CorsOptions.AllowAll);
+
+            app.MapSignalR("/signalr", hubConfiguration);
 
             app.UseWebApi(config);
 
@@ -63,14 +78,15 @@ namespace Northwind.Api.AppStart
             //    CookieHttpOnly = true
             //});
 
+         
+
             app.SetDefaultSignInAsAuthenticationType("Basic");
             app.UseBasicAuthentication(new BasicAuthenticationOptions("demo", ValidateBasicUser));
-            //app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions()
-            //{
-            //    AccessTokenExpireTimeSpan = TimeSpan.FromDays(1)
+            app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions()
+            {
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1)
 
-            //});
-
+            });
 
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
 

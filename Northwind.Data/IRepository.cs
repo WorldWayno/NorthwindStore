@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Northwind.Data
 {
@@ -33,5 +34,9 @@ namespace Northwind.Data
         void Remove(params object[] keyValues);
 
         IQueryable<TEntity> Queryable();
+
+        int SaveChanges();
+
+        Task<int> SaveChangesAsync();
     }
 }

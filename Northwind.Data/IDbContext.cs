@@ -12,5 +12,7 @@ namespace Northwind.Data
         IDbSet<TEntity> Set<TEntity>() where TEntity : class;
  
         int SaveChanges();
+
+        Task<int> SaveChangesAsync();
     }
 }

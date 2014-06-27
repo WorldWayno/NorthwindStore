@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Northwind.Data
 {
@@ -44,6 +45,17 @@ namespace Northwind.Data
         public IQueryable<TEntity> Queryable()
         {
             return Set.AsQueryable();
+        }
+
+        public int SaveChanges()
+        {
+            return Context.SaveChanges();
+        }
+
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await Context.SaveChangesAsync();
         }
     }
 }

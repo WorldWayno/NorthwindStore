@@ -30,20 +30,24 @@ namespace Northwind.Api.Controllers.odata
     [RoutePrefix("employees")]
     public class EmployeesController : ODataController
     {
-        private NorthwindContext db = new NorthwindContext();
+        private readonly IRepository<Employee> _repository;
 
+        public EmployeesController(IRepository<Employee> repository)
+        {
+            
+        }
         // GET: odata/Employees
         [Queryable]
         public IQueryable<Employee> GetEmployees()
         {
-            return db.Employees;
+            return _repository.Queryable();
         }
 
         // GET: odata/Employees(5)
         [Queryable]
         public SingleResult<Employee> GetEmployee([FromODataUri] int key)
         {
-            return SingleResult.Create(db.Employees.Where(employee => employee.EmployeeID == key));
+            return SingleResult.Create(_repository.Queryable().Where(employee => employee.EmployeeID == key));
         }
 
         // PUT: odata/Employees(5)
@@ -59,11 +63,12 @@ namespace Northwind.Api.Controllers.odata
                 return BadRequest();
             }
 
-            db.Entry(employee).State = EntityState.Modified;
+            //_repository.Entry(employee).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                _repository.Update(employee);
+                await _repository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -88,8 +93,8 @@ namespace Northwind.Api.Controllers.odata
                 return BadRequest(ModelState);
             }
 
-            db.Employees.Add(employee);
-            await db.SaveChangesAsync();
+            _repository.Add(employee);
+            await _repository.SaveChangesAsync();
 
             return Created(employee);
         }
@@ -103,7 +108,7 @@ namespace Northwind.Api.Controllers.odata
                 return BadRequest(ModelState);
             }
 
-            Employee employee = await db.Employees.FindAsync(key);
+            Employee employee =  _repository.Find(key);
             if (employee == null)
             {
                 return NotFound();
@@ -113,7 +118,7 @@ namespace Northwind.Api.Controllers.odata
 
             try
             {
-                await db.SaveChangesAsync();
+                await _repository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -133,14 +138,14 @@ namespace Northwind.Api.Controllers.odata
         // DELETE: odata/Employees(5)
         public async Task<IHttpActionResult> Delete([FromODataUri] int key)
         {
-            Employee employee = await db.Employees.FindAsync(key);
+            Employee employee = _repository.Find(key);
             if (employee == null)
             {
                 return NotFound();
             }
 
-            db.Employees.Remove(employee);
-            await db.SaveChangesAsync();
+            _repository.Remove(employee);
+            await _repository.SaveChangesAsync();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -149,21 +154,22 @@ namespace Northwind.Api.Controllers.odata
         [Queryable]
         public IQueryable<Order> GetOrders([FromODataUri] int key)
         {
-            return db.Employees.Where(m => m.EmployeeID == key).SelectMany(m => m.Orders);
+            return _repository.Queryable().Where(m => m.EmployeeID == key).SelectMany(m => m.Orders);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _repository.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
         private bool EmployeeExists(int key)
         {
-            return db.Employees.Count(e => e.EmployeeID == key) > 0;
+            return _repository.Queryable().Count(e => e.EmployeeID == key) > 0;
         }
     }
 }
