@@ -27,12 +27,15 @@ namespace Northwind.Api.Controllers.odata
     config.Routes.MapODataRoute("odata", "odata", builder.GetEdmModel());
     */
    
-    [RoutePrefix("employees")]
-    public class EmployeesController : ODataController
+    /// <summary>
+    /// 
+    /// </summary>
+    [RoutePrefix("employeesdata")]
+    public class EmployeesDataController : ODataController
     {
         private readonly IRepository<Employee> _repository;
 
-        public EmployeesController(IRepository<Employee> repository)
+        public EmployeesDataController(IRepository<Employee> repository)
         {
             
         }
@@ -44,7 +47,7 @@ namespace Northwind.Api.Controllers.odata
         }
 
         // GET: odata/Employees(5)
-        [Queryable]
+        [EnableQuery()]
         public SingleResult<Employee> GetEmployee([FromODataUri] int key)
         {
             return SingleResult.Create(_repository.Queryable().Where(employee => employee.EmployeeID == key));

@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using System.Web.Routing;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
-using Northwind.Api.Areas.HelpPage.App_Start;
 using Northwind.Api.Middleware.Token;
 using Northwind.Api.Repository;
 using Northwind.Api.Security;
@@ -28,10 +28,7 @@ namespace Northwind.Api.AppStart
             var config = new HttpConfiguration();
             // force token authentication
             //config.SuppressDefaultHostAuthentication();
-
-            HelpPageConfig.Register(config);
-
-            AreaRegistration.RegisterAllAreas();
+           // config.Filters.Add(new HostAuthenticationFilter("Bearer"));
 
             ConfigureOAuth(app);
 
@@ -39,6 +36,7 @@ namespace Northwind.Api.AppStart
 
             app.UseCors(CorsOptions.AllowAll);
 
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             WebApiConfig.Register(config);
 
@@ -55,26 +53,24 @@ namespace Northwind.Api.AppStart
             var oAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(20),
                 Provider = new SimpleAuthorizationServerProvider(),
+                AuthenticationMode = AuthenticationMode.Passive,
                 AllowInsecureHttp = true
             };
 
             // Token Generation
             app.UseOAuthAuthorizationServer(oAuthServerOptions);
 
-            //app.UseCookieAuthentication(new CookieAuthenticationOptions()
-            //{
-            //    AuthenticationType = DefaultAuthenticationTypes.ExternalBearer,
-            //    LoginPath = new PathString("/Account/Login"),
-            //    CookieHttpOnly = true
-            //});
-
-            app.SetDefaultSignInAsAuthenticationType("Basic");
+            //app.SetDefaultSignInAsAuthenticationType("Basic");
             app.UseBasicAuthentication(new BasicAuthenticationOptions("demo", ValidateBasicUser));
+
             app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions()
             {
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1)
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(20),
+                TokenEndpointPath = new PathString("/bearer"),
+                Provider = new OAuthAuthorizationServerProvider(),
+                AllowInsecureHttp = true
             });
 
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());

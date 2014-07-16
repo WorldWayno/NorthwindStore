@@ -203,7 +203,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\XmlDocument.xml" />
+    <Content Include="App_Data\XmlDocument.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -283,13 +285,17 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImagesController.cs" />
+    <Compile Include="Middleware\Token\ServerTokenAuthenticationProvider.cs" />
     <Compile Include="Middleware\Token\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\IdentityController.cs" />
-    <Compile Include="Controllers\odata\EmployeesController.cs" />
+    <Compile Include="Controllers\odata\EmployeesDataController.cs" />
     <Compile Include="Middleware\Token\TokenAuthorizationProvider.cs" />
     <Compile Include="Models\ViewClaim.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -309,8 +315,8 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
-    <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -318,7 +324,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Employees\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Northwind.Data\Northwind.Data.csproj">
       <Project>{465891fd-3437-44a0-8e64-53c688eb684b}</Project>
