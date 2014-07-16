@@ -60,19 +60,21 @@ namespace Northwind.Api.Controllers
 
                 foreach (HttpContent context in mp.Contents)
                 {
-                    Stream stream = context.ReadAsStreamAsync().Result;
-                    var name = context.Headers.ContentDisposition.FileName.Replace("\"","");
-
-                    var bte = StreamToByteArray(stream);
-                    var emp = _repository.Queryable()
-                        .SingleOrDefault(e => e.EmployeeID == 1);
-                    if (emp != null)
+                    using (Stream stream = context.ReadAsStreamAsync().Result)
                     {
-                        emp.Photo = bte;
-                        emp.PhotoPath = name;
+                        Image image = Image.FromStream(stream);
+                        var name = context.Headers.ContentDisposition.FileName.Replace("\"", "");
 
-                        //_repository.Update(emp);
-                        var saved = _repository.SaveChanges();
+                        var bte = StreamToByteArray(stream);
+                        var emp = _repository.Queryable()
+                            .SingleOrDefault(e => e.EmployeeID == 1);
+                        if (emp != null)
+                        {
+                            emp.Photo = bte;
+                            emp.PhotoPath = name;
+
+                            var saved = _repository.SaveChanges();
+                        }
                     }
                 }
 
