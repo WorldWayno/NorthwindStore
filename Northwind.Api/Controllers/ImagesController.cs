@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.Http;
 using Microsoft.Data.Edm.Library;
 using Northwind.Data;
@@ -52,36 +53,35 @@ namespace Northwind.Api.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> PostAsync()
         {
-            if (Request.Content.IsMimeMultipartContent())
+            if (!Request.Content.IsMimeMultipartContent()) return BadRequest();
+
+            //var streamProvider = new MultipartFormDataStreamProvider(Path.GetTempPath());
+            var streamProvider = new MultipartMemoryStreamProvider();
+            var path = HostingEnvironment.MapPath("~/Content/");
+            await Request.Content.ReadAsMultipartAsync(streamProvider);
+
+            foreach (HttpContent context in streamProvider.Contents)
             {
-                var streamProvider = new MultipartFormDataStreamProvider(Path.GetTempPath());
-                var mp = new MultipartMemoryStreamProvider();
-                await Request.Content.ReadAsMultipartAsync(mp);
-
-                foreach (HttpContent context in mp.Contents)
+                using (Stream stream = context.ReadAsStreamAsync().Result)
                 {
-                    using (Stream stream = context.ReadAsStreamAsync().Result)
-                    {
-                        Image image = Image.FromStream(stream);
-                        var name = context.Headers.ContentDisposition.FileName.Replace("\"", "");
+                    var name = context.Headers.ContentDisposition.FileName.Replace("\"", "");
+                    stream.CopyTo(new FileStream(Path.Combine(path, name), FileMode.CreateNew));
 
-                        var bte = StreamToByteArray(stream);
-                        var emp = _repository.Queryable()
-                            .SingleOrDefault(e => e.EmployeeID == 1);
-                        if (emp != null)
-                        {
-                            emp.Photo = bte;
-                            emp.PhotoPath = name;
+                    var photoByte = StreamToByteArray(stream);
+                    var emp = _repository.Queryable()
+                        .SingleOrDefault(e => e.EmployeeID == 1);
 
-                            var saved = _repository.SaveChanges();
-                        }
-                    }
+                    if (emp == null) continue;
+                    emp.Photo = photoByte;
+                    emp.PhotoPath = name;
+
+                    var saved = await _repository.SaveChangesAsync();
                 }
-
-                //var fileNames = streamProvider.FileData.Select(entry => entry.LocalFileName);
-                //var names = streamProvider.FileData.Select(entry => entry.Headers.ContentDisposition.FileName);
-                //var contextTypes = streamProvider.FileData.Select(entry => entry.Headers.ContentType.MediaType);
             }
+
+            //var fileNames = streamProvider.FileData.Select(entry => entry.LocalFileName);
+            //var names = streamProvider.FileData.Select(entry => entry.Headers.ContentDisposition.FileName);
+            //var contextTypes = streamProvider.FileData.Select(entry => entry.Headers.ContentType.MediaType);
 
             return Ok();
         }
