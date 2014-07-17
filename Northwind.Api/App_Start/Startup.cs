@@ -1,4 +1,7 @@
-﻿using System.Web.Routing;
+﻿using System.IO;
+using System.Web;
+using System.Web.Http.Description;
+using System.Web.Routing;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
@@ -23,29 +26,32 @@ namespace Northwind.Api.AppStart
 {
     public class Startup
     {
+        public static HttpConfiguration HttpConfiguration { get; private set; }
         public void Configuration(IAppBuilder app)
         {
-            var config = new HttpConfiguration();
+            HttpConfiguration = new HttpConfiguration();
             // force token authentication
-            //config.SuppressDefaultHostAuthentication();
-           // config.Filters.Add(new HostAuthenticationFilter("Bearer"));
+            HttpConfiguration.SuppressDefaultHostAuthentication();
+
+            HttpConfiguration.MapHttpAttributeRoutes();
 
             ConfigureOAuth(app);
 
-            UnityConfig.RegisterComponents(config);
+            UnityConfig.RegisterComponents(HttpConfiguration);
 
             app.UseCors(CorsOptions.AllowAll);
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            WebApiConfig.Register(config);
+
+            WebApiConfig.Register(HttpConfiguration);
 
           
             var hubConfiguration = new HubConfiguration { EnableDetailedErrors = true, EnableJavaScriptProxies = true };
 
             app.MapSignalR("/signalr", hubConfiguration);
 
-            app.UseWebApi(config);
+            app.UseWebApi(HttpConfiguration);
         }
 
         public void ConfigureOAuth(IAppBuilder app)

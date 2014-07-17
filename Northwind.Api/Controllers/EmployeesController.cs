@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using Northwind.Data;
+using Northwind.Model;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Northwind.Data;
-using Northwind.Model;
 
 namespace Northwind.Api.Controllers
 {
     [RoutePrefix("employees")]
     public class EmployeesController : ApiController
     {
-        private NorthwindContext db = new NorthwindContext();
+        private readonly NorthwindContext db = new NorthwindContext();
 
         // GET: api/Employees
         public IQueryable<Employee> GetEmployees()
@@ -26,7 +22,7 @@ namespace Northwind.Api.Controllers
         }
 
         // GET: api/Employees/5
-        [ResponseType(typeof(Employee))]
+        [ResponseType(typeof (Employee))]
         public async Task<IHttpActionResult> GetEmployee(int id)
         {
             Employee employee = await db.Employees.FindAsync(id);
@@ -39,7 +35,7 @@ namespace Northwind.Api.Controllers
         }
 
         // PUT: api/Employees/5
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof (void))]
         public async Task<IHttpActionResult> PutEmployee(int id, Employee employee)
         {
             if (!ModelState.IsValid)
@@ -64,17 +60,14 @@ namespace Northwind.Api.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Employees
-        [ResponseType(typeof(Employee))]
+        [ResponseType(typeof (Employee))]
         public async Task<IHttpActionResult> PostEmployee(Employee employee)
         {
             if (!ModelState.IsValid)
@@ -85,11 +78,11 @@ namespace Northwind.Api.Controllers
             db.Employees.Add(employee);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = employee.EmployeeID }, employee);
+            return CreatedAtRoute("DefaultApi", new {id = employee.EmployeeID}, employee);
         }
 
         // DELETE: api/Employees/5
-        [ResponseType(typeof(Employee))]
+        [ResponseType(typeof (Employee))]
         public async Task<IHttpActionResult> DeleteEmployee(int id)
         {
             Employee employee = await db.Employees.FindAsync(id);

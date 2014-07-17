@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -45,7 +46,7 @@ namespace Northwind.Api.Controllers
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             response.Content = new StreamContent(ms);
             //response.Content = new ByteArrayContent(ms.ToArray());
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpg");
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
 
             return response;
         }
@@ -65,7 +66,10 @@ namespace Northwind.Api.Controllers
                 using (Stream stream = context.ReadAsStreamAsync().Result)
                 {
                     var name = context.Headers.ContentDisposition.FileName.Replace("\"", "");
-                    stream.CopyTo(new FileStream(Path.Combine(path, name), FileMode.CreateNew));
+                    using (var fs = new FileStream(Path.Combine(path, name), FileMode.Create))
+                    {
+                        await stream.CopyToAsync(fs);
+                    }
 
                     var photoByte = StreamToByteArray(stream);
                     var emp = _repository.Queryable()
@@ -105,6 +109,8 @@ namespace Northwind.Api.Controllers
             Debug.Assert(bytesRead == output.Length, "Bytes read from stream matches stream length");
             return output;
         }
+
+
         private Image ByteArrayToImage(byte[] byteArrayIn)
         {
             var ms = new MemoryStream(byteArrayIn);

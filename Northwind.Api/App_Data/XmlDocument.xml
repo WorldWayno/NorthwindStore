@@ -9,6 +9,17 @@
             </summary>
             <param name="repository"></param>
         </member>
+        <member name="T:Northwind.Api.Controllers.SwaggerController">
+            <summary>
+             Swagger
+            </summary>
+        </member>
+        <member name="M:Northwind.Api.Controllers.SwaggerController.Index">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Northwind.Api.Middleware.Token.ServerTokenAuthenticationProvider">
             <summary>
             

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Mvc;
 using Northwind.Api.Models;
 using Northwind.Data;
 using Northwind.Model;
@@ -12,8 +14,8 @@ namespace Northwind.Api.Controllers
 {
     /// <summary>
     /// </summary>
-    [Authorize]
-    [RoutePrefix("api/orders")]
+    //[Authorize]
+    [System.Web.Http.RoutePrefix("api/orders")]
     public class OrdersController : ApiController
     {
         private readonly IRepository<Order> _repository;
@@ -32,7 +34,7 @@ namespace Northwind.Api.Controllers
         /// </summary>
         /// <returns></returns>
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult Get()
         {
             IEnumerable<Order> orders = FetchOrders();
@@ -44,7 +46,7 @@ namespace Northwind.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("{id:int}")]
+        [System.Web.Http.Route("{id:int}")]
         public IHttpActionResult Get(int id)
         {
             Order result = FetchOrders(o => o.OrderID == id).SingleOrDefault();
@@ -58,7 +60,7 @@ namespace Northwind.Api.Controllers
         /// <param name="order"></param>
         /// <returns></returns>
 
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public async Task<IHttpActionResult> Post([FromBody] OrderModel order)
         {
             if (!ModelState.IsValid)
