@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Northwind.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Northwind.Api.Controllers.EmployeesController.GetEmployees">
+            <summary>
+              Get all the Employees in an org
+            </summary>
+            <remarks>I like this remark</remarks>
+            <returns><see cref="T:Northwind.Model.Employee"/></returns>
+        </member>
+        <member name="M:Northwind.Api.Controllers.EmployeesController.GetEmployee(System.Int32)">
+            <summary>
+             Gets an employee by name
+            </summary>
+            <param name="id"></param>
+            <returns><see cref="T:Northwind.Model.Employee"/></returns>
+        </member>
+        <member name="M:Northwind.Api.Controllers.ImagesController.#ctor(Northwind.Data.IRepository{Northwind.Model.Employee})">
+            <summary>
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:Northwind.Api.Controllers.ImagesController.GetEmployeesImage(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="employeeId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Northwind.Api.Controllers.HelpController">
+            <summary>
+             Swagger
+            </summary>
+        </member>
+        <member name="M:Northwind.Api.Controllers.HelpController.Index">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Northwind.Api.Middleware.Token.ServerTokenAuthenticationProvider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Northwind.Api.Controllers.odata.EmployeesDataController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Northwind.Api.Middleware.Token.TokenAuthorizationProvider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Northwind.Api.Controllers.OrdersController">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Northwind.Api.Controllers.OrdersController.#ctor(Northwind.Data.IRepository{Northwind.Model.Order})">
+            <summary>
+            </summary>
+            <param name="repository"></param>
+        </member>
+        <member name="M:Northwind.Api.Controllers.OrdersController.Get">
+            <summary>
+                Gets all orders
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Northwind.Api.Controllers.OrdersController.Get(System.Int32)">
+            <summary>
+                Gets an order by id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Northwind.Api.Controllers.OrdersController.Post(Northwind.Api.Models.OrderModel)">
+            <summary>
+            </summary>
+            <param name="order"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

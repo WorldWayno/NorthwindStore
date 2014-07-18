@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Northwind.Api.Models;
 using Northwind.Data;
 using Northwind.Model;
@@ -12,8 +14,8 @@ namespace Northwind.Api.Controllers
 {
     /// <summary>
     /// </summary>
-    [Authorize]
-    [RoutePrefix("api/orders")]
+    //[Authorize]
+    [System.Web.Http.RoutePrefix("api/orders")]
     public class OrdersController : ApiController
     {
         private readonly IRepository<Order> _repository;
@@ -33,10 +35,10 @@ namespace Northwind.Api.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        public IHttpActionResult Get()
+        public IEnumerable<Order> Get()
         {
             IEnumerable<Order> orders = FetchOrders();
-            return Ok(orders);
+            return orders;
         }
 
         /// <summary>
@@ -45,7 +47,8 @@ namespace Northwind.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Route("{id:int}")]
-        public IHttpActionResult Get(int id)
+        [ResponseType(typeof(Order))]
+        public async Task<IHttpActionResult> Get(int id)
         {
             Order result = FetchOrders(o => o.OrderID == id).SingleOrDefault();
             if (result == null) return NotFound();

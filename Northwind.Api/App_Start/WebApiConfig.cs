@@ -18,8 +18,6 @@ namespace Northwind.Api
             // Cors
             config.EnableCors();
 
-            // attribute routing
-            config.MapHttpAttributeRoutes();
 
             // OData support
             config.EnableQuerySupport();

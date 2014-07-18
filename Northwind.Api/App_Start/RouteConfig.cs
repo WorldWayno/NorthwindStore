@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Northwind.Api
@@ -9,15 +10,16 @@ namespace Northwind.Api
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                "HelpPage_Default",
-                "Help/{action}/{apiId}",
-                new { controller = "Help", action = "Index", apiId = UrlParameter.Optional });
+            routes.MapHttpRoute(
+               name: "SwaggerApi",
+               routeTemplate: "api/{controller}",
+               defaults: new { swagger = true }
+           );  
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Help", action = "Index", id = UrlParameter.Optional }
                 );
 
 

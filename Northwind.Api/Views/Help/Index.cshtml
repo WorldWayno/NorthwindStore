@@ -1,0 +1,85 @@
+﻿@using System.Web.Hosting
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@ViewBag.Title</title>
+        <meta name="viewport" content="width=device-width" />
+        <link href='//fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css' />
+        <link href="~/Content/highlight.default.css" rel="stylesheet" />
+        <link href="~/Content/screen.css" rel="stylesheet" />
+        <script src="~/Scripts/shred.bundle.js"></script>
+        <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+        <script src="~/Scripts/jquery.slideto.min.js"></script>
+        <script src="~/Scripts/jquery.wiggle.min.js"></script>
+        <script src="~/Scripts/jquery.ba-bbq.min.js"></script>
+        <script src="~/Scripts/handlebars-1.0.0.js"></script>
+        <script src="~/Scripts/underscore-min.js"></script>
+        <script src="~/Scripts/backbone-min.js"></script>
+        <script src="~/Scripts/swagger.js"></script>
+        <script src="~/Scripts/swagger-ui.js"></script>
+        <script src="~/Scripts/highlight.7.3.pack.js"></script>
+     
+  
+    </head>
+    <body>
+        <input type="hidden" id="apiUrl"  value="@ViewBag.ApiDocUri"/>
+        <div id='header'>
+            <div class="swagger-ui-wrap">
+                <a id="logo" href="http://swagger.wordnik.com">Northwind</a>
+          
+                <form id='api_selector'>
+                    <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text" /></div>
+                    <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text" /></div>
+                    <div class='input'><a id="explore" href="#">Explore</a></div>
+                </form>
+            </div>
+        </div>
+        <div id="message-bar" class="swagger-ui-wrap">
+            &nbsp;
+        </div>
+        <div id="swagger-ui-container" class="swagger-ui-wrap">
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                var url = $('#apiUrl').val();
+                window.swaggerUi = new SwaggerUi({
+                    url: url,
+                    dom_id: "swagger-ui-container",
+                    supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
+                    onComplete: function (swaggerApi, swaggerUi) {
+                        if (console) {
+                            console.log("Loaded SwaggerUI");
+                        }
+                        $('pre code').each(function (i, e) { hljs.highlightBlock(e); });
+                    },
+                    onFailure: function (data) {
+                        if (console) {
+                            console.log("Unable to Load SwaggerUI");
+                            console.log(data);
+                        }
+                    },
+                    docExpansion: "none"
+                });
+
+                $('#input_apiKey').change(function() {
+                    var key = $('#input_apiKey')[0].value;
+                    console.log("key: " + key);
+                    if (key && key.trim() != "") {
+                        console.log("added key " + key);
+                        window.authorizations.add("key", new ApiKeyAuthorization("api_key", key, "query"));
+                    }
+                });
+
+                window.swaggerUi.load();
+            });
+
+        </script>
+
+    </body>
+</html>
