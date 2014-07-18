@@ -4,17 +4,38 @@
         <name>Northwind.Api</name>
     </assembly>
     <members>
+        <member name="M:Northwind.Api.Controllers.EmployeesController.GetEmployees">
+            <summary>
+              Get all the Employees in an org
+            </summary>
+            <remarks>I like this remark</remarks>
+            <returns><see cref="T:Northwind.Model.Employee"/></returns>
+        </member>
+        <member name="M:Northwind.Api.Controllers.EmployeesController.GetEmployee(System.Int32)">
+            <summary>
+             Gets an employee by name
+            </summary>
+            <param name="id"></param>
+            <returns><see cref="T:Northwind.Model.Employee"/></returns>
+        </member>
         <member name="M:Northwind.Api.Controllers.ImagesController.#ctor(Northwind.Data.IRepository{Northwind.Model.Employee})">
             <summary>
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="T:Northwind.Api.Controllers.SwaggerController">
+        <member name="M:Northwind.Api.Controllers.ImagesController.GetEmployeesImage(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="employeeId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Northwind.Api.Controllers.HelpController">
             <summary>
              Swagger
             </summary>
         </member>
-        <member name="M:Northwind.Api.Controllers.SwaggerController.Index">
+        <member name="M:Northwind.Api.Controllers.HelpController.Index">
             <summary>
             
             </summary>

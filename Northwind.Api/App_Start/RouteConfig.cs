@@ -12,14 +12,14 @@ namespace Northwind.Api
 
             routes.MapHttpRoute(
                name: "SwaggerApi",
-               routeTemplate: "api/docs/{controller}",
+               routeTemplate: "api/{controller}",
                defaults: new { swagger = true }
            );  
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Help", action = "Index", id = UrlParameter.Optional }
                 );
 
 

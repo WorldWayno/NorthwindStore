@@ -15,13 +15,23 @@ namespace Northwind.Api.Controllers
     {
         private readonly NorthwindContext db = new NorthwindContext();
 
-        // GET: api/Employees
+       
+        /// <summary>
+        ///   Get all the Employees in an org
+        /// </summary>
+        /// <remarks>I like this remark</remarks>
+        /// <returns><see cref="Employee"/></returns>
         public IQueryable<Employee> GetEmployees()
         {
             return db.Employees;
         }
 
-        // GET: api/Employees/5
+        
+        /// <summary>
+        ///  Gets an employee by name
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns><see cref="Employee"/></returns>
         [ResponseType(typeof (Employee))]
         public async Task<IHttpActionResult> GetEmployee(int id)
         {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Mvc;
+using System.Web.Http.Description;
 using Northwind.Api.Models;
 using Northwind.Data;
 using Northwind.Model;
@@ -34,11 +34,11 @@ namespace Northwind.Api.Controllers
         /// </summary>
         /// <returns></returns>
 
-        [System.Web.Http.HttpGet]
-        public IHttpActionResult Get()
+        [HttpGet]
+        public IEnumerable<Order> Get()
         {
             IEnumerable<Order> orders = FetchOrders();
-            return Ok(orders);
+            return orders;
         }
 
         /// <summary>
@@ -46,8 +46,9 @@ namespace Northwind.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [System.Web.Http.Route("{id:int}")]
-        public IHttpActionResult Get(int id)
+        [Route("{id:int}")]
+        [ResponseType(typeof(Order))]
+        public async Task<IHttpActionResult> Get(int id)
         {
             Order result = FetchOrders(o => o.OrderID == id).SingleOrDefault();
             if (result == null) return NotFound();
@@ -60,7 +61,7 @@ namespace Northwind.Api.Controllers
         /// <param name="order"></param>
         /// <returns></returns>
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public async Task<IHttpActionResult> Post([FromBody] OrderModel order)
         {
             if (!ModelState.IsValid)
