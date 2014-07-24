@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Web;
 using System.Web.Http.Description;
+using System.Web.Http.Dispatcher;
 using System.Web.Routing;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.SignalR;
@@ -12,6 +13,7 @@ using Microsoft.Owin.Security.OAuth;
 using Northwind.Api.Middleware.Token;
 using Northwind.Api.Repository;
 using Northwind.Api.Security;
+using Northwind.Api.Services;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Mvc;
+using SDammann.WebApi.Versioning;
 
 [assembly: OwinStartup(typeof(Northwind.Api.AppStart.Startup))]
 
@@ -30,7 +33,7 @@ namespace Northwind.Api.AppStart
         public static HttpConfiguration HttpConfiguration { get; private set; }
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration = new HttpConfiguration();
+           HttpConfiguration = new HttpConfiguration();
             // force token authentication
            HttpConfiguration.SuppressDefaultHostAuthentication();
 
@@ -40,11 +43,14 @@ namespace Northwind.Api.AppStart
 
             app.UseCors(CorsOptions.AllowAll);
 
-           // RouteConfig.RegisterRoutes(RouteTable.Routes);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             var hubConfiguration = new HubConfiguration { EnableDetailedErrors = true, EnableJavaScriptProxies = true };
 
             app.MapSignalR("/signalr", hubConfiguration);
+
+            HttpConfiguration.Services.Replace(typeof (IHttpControllerSelector), 
+                new VersionControllerSelector(HttpConfiguration));
 
             SwaggerConfig.Register(HttpConfiguration);
 

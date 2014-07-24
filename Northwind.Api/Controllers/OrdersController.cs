@@ -10,7 +10,7 @@ using Northwind.Api.Models;
 using Northwind.Data;
 using Northwind.Model;
 
-namespace Northwind.Api.Controllers
+namespace Northwind.Api.Controllers.V1
 {
     /// <summary>
     /// </summary>

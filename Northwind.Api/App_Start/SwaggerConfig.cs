@@ -1,5 +1,8 @@
 using System;
 using System.Net.Http;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Web;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -20,27 +23,44 @@ namespace Northwind.Api
             SwaggerSpecConfig.Customize(c =>
             {
                 c.IgnoreObsoleteActions();
-                //c.GroupDeclarationsBy(ResolveResourceName);
+                c.GroupDeclarationsBy(ResolveResourceName);
                 c.ResolveBasePathUsing(ResolveBasePath);
                 c.IncludeXmlComments(HostingEnvironment.MapPath("~/App_Data/Northwind.Api.xml"));
             });
-            // NOTE: If you want to customize the generated swagger or UI, use SwaggerSpecConfig and/or SwaggerUiConfig here ...
+
+            SwaggerUiConfig.Customize(c =>
+            {
+                c.SupportHeaderParams = true;
+                c.DocExpansion = DocExpansion.List;
+                //var ass  = Assembly.GetExecutingAssembly();
+                //string[] names = ass.GetManifestResourceNames();
+                c.CustomRoute("index.html", Assembly.GetExecutingAssembly(), "Northwind.Api.Swaggerui.index.html");
+            });
         }
 
         private static string ResolveBasePath(HttpRequestMessage httpRequestMessage)
         {
             var req = httpRequestMessage;
-            var path = HostingEnvironment.ApplicationVirtualPath;
-            if (path.Equals("/"))
+            var path = HostingEnvironment.ApplicationVirtualPath.TrimStart('/');
+            if (string.IsNullOrWhiteSpace(path))
             {
-              path = req.RequestUri.GetLeftPart(UriPartial.Authority) + req.GetConfiguration().VirtualPathRoot.TrimEnd('/'); 
+                path = req.RequestUri.GetLeftPart(UriPartial.Authority) +
+                       req.GetConfiguration().VirtualPathRoot.TrimEnd('/');
             }
+
+           // path = "http://northwindapi";
             return path;
         }
 
         private static string ResolveResourceName(ApiDescription apiDescription)
         {
             return apiDescription.ActionDescriptor.ControllerDescriptor.ControllerName;
+        }
+
+        private static string GetBasePath()
+        { 
+            var virtPath = HostingEnvironment.ApplicationVirtualPath.TrimEnd('/');
+            return virtPath;
         }
     }
 }

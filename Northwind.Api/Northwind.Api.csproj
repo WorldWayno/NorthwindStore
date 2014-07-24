@@ -216,9 +216,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Northwind.Api.XML">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\highlight.default.css" />
     <Content Include="Content\screen.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -307,7 +304,9 @@
     <Content Include="Scripts\knockout-3.1.0.js" />
     <Content Include="Scripts\shred.bundle.js" />
     <Content Include="Scripts\underscore-min.js" />
-    <Content Include="swagger-ui\index.html" />
+    <EmbeddedResource Include="Swaggerui\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="Scripts\backbone-min.js" />
     <Content Include="Scripts\handlebars-1.0.0.js" />
     <Content Include="Scripts\swagger.js" />
@@ -323,7 +322,6 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
-    <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Middleware\Token\ServerTokenAuthenticationProvider.cs" />
     <Compile Include="Middleware\Token\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="App_Start\Startup.cs" />
@@ -331,7 +329,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\IdentityController.cs" />
-    <Compile Include="Controllers\odata\EmployeesDataController.cs" />
+    <Compile Include="Controllers\EmployeesDataController.cs" />
     <Compile Include="Middleware\Token\TokenAuthorizationProvider.cs" />
     <Compile Include="Models\ViewClaim.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -347,6 +345,7 @@
     <Compile Include="Middleware\Basic\BasicAuthenticationMiddleware.cs" />
     <Compile Include="Middleware\Basic\BasicAuthenticationOptions.cs" />
     <Compile Include="Middleware\Basic\BasicAuthnMiddlewareExtensions.cs" />
+    <Compile Include="Services\VersionControllerSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -362,6 +361,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Controllers\odata\" />
     <Folder Include="Views\Employees\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Northwind.Api.Models;
 using Northwind.Model;
 using NUnit.Framework;
@@ -78,12 +79,12 @@ namespace Northwind.Api.Tests
 
                 var token = client.GetTokenAsync("wlewalski@comcast.net", "Wayne!");
 
-                //var formValues = new Dictionary<string, string>
-                //{
-                //    {"username", "wlewalski@comcast.net"},
-                //    {"password", "Wayne!"},
-                //    {"grant_type", "password"}
-                //};
+                var formValues = new Dictionary<string, string>
+                {
+                    {"username", "wlewalski@comcast.net"},
+                    {"password", "Wayne!"},
+                    {"grant_type", "password"}
+                };
 
                 var response = client.PostFormData("token", formValues).Result;
 
@@ -97,6 +98,27 @@ namespace Northwind.Api.Tests
 
                 Assert.IsNotNull(token);
             }
+        }
+
+        [Test]
+        public void Post_Json_to_Users()
+        {
+
+            var json = JObject.FromObject(
+                new
+                {
+                    swaggerVersion = "1.2",
+                    apiVersion = "1.0",
+                    apis = new object[]
+                    {
+                        new { path = "/deletes" },
+                        new { path = "/gets" },
+                        new { path = "/posts" },
+                        new { path = "/puts" },
+                    }
+                });
+
+            Assert.IsNotNull(json);
         }
     }
 }
