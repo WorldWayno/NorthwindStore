@@ -48,16 +48,18 @@ namespace Northwind.Api.Controllers
             var emp = _repository.Queryable().SingleOrDefault(e => e.EmployeeID == employeeId);
             if (emp == null) return NotFound();
 
-            //byte[] imgData = emp.Photo;
-            //var ms = new MemoryStream(imgData);
-
-            //var response = new HttpResponseMessage(HttpStatusCode.OK);
+            byte[] imgData = emp.Photo;
+            FileStream fs = new FileStream("", FileMode.Create);
+            fs.Write(imgData,0,imgData.Length);
+            var ms = new MemoryStream(imgData);
+            Image img = Image.FromStream(ms);
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
             //response.Content = new StreamContent(ms);
-            ////response.Content = new ByteArrayContent(ms.ToArray());
-            //response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-            var en = Convert.ToBase64String(emp.Photo);
-            return Ok("data:image/jpg;base64," + en);
-            // return Ok(Convert.ToBase64String(emp.Photo));
+            response.Content = new ByteArrayContent(ms.ToArray());
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpg");
+           // var en = Convert.ToBase64String(emp.Photo);
+            //return Ok("data:image/png;base64," + en);
+            return Ok(response);
         }
 
         [HttpPost]

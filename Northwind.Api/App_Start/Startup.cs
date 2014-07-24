@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Extensions;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Northwind.Api.Middleware.Token;
@@ -31,9 +32,7 @@ namespace Northwind.Api.AppStart
         {
             HttpConfiguration = new HttpConfiguration();
             // force token authentication
-            HttpConfiguration.SuppressDefaultHostAuthentication();
-
-            HttpConfiguration.MapHttpAttributeRoutes();
+           HttpConfiguration.SuppressDefaultHostAuthentication();
 
             ConfigureOAuth(app);
 
@@ -41,17 +40,21 @@ namespace Northwind.Api.AppStart
 
             app.UseCors(CorsOptions.AllowAll);
 
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+           // RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-
-            WebApiConfig.Register(HttpConfiguration);
-
-          
             var hubConfiguration = new HubConfiguration { EnableDetailedErrors = true, EnableJavaScriptProxies = true };
 
             app.MapSignalR("/signalr", hubConfiguration);
 
+            SwaggerConfig.Register(HttpConfiguration);
+
+            WebApiConfig.Register(HttpConfiguration);
+
             app.UseWebApi(HttpConfiguration);
+
+            app.UseStageMarker(PipelineStage.MapHandler);
+
+           
         }
 
         public void ConfigureOAuth(IAppBuilder app)

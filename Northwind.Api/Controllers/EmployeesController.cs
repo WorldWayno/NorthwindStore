@@ -10,7 +10,6 @@ using System.Web.Http.Description;
 
 namespace Northwind.Api.Controllers
 {
-    [RoutePrefix("employees")]
     public class EmployeesController : ApiController
     {
         private readonly NorthwindContext db = new NorthwindContext();

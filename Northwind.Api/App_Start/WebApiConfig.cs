@@ -15,6 +15,8 @@ namespace Northwind.Api
             // Web API configuration and services
             //config.Filters.Add(new AuthenticationFilter());
 
+            config.MapHttpAttributeRoutes();
+
             // Cors
             config.EnableCors();
 
@@ -23,11 +25,11 @@ namespace Northwind.Api
             config.EnableQuerySupport();
 
             // Routes
-            config.Routes.MapHttpRoute(
-                name: "VersionedtApi",
-                routeTemplate: "api/v{version}/{controller}/{id}",
-                defaults: new {version = 1, id = RouteParameter.Optional }
-            );
+            //config.Routes.MapHttpRoute(
+            //    name: "VersionedtApi",
+            //    routeTemplate: "api/v{version}/{controller}/{id}",
+            //    defaults: new {version = 1, id = RouteParameter.Optional }
+            //);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
