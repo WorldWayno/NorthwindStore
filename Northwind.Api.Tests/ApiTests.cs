@@ -85,7 +85,7 @@ namespace Northwind.Api.Tests
                 //    {"grant_type", "password"}
                 //};
 
-                //var response = client.PostFormData("token", formValues).Result;
+                var response = client.PostFormData("token", formValues).Result;
 
                 //Assert.IsTrue(response.IsSuccessStatusCode);
 
