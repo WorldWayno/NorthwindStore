@@ -10,6 +10,11 @@ namespace Northwind.Data
         protected IDbContext Context;
         protected IDbSet<TEntity> Set;
 
+        //public Repository()
+        //    : this(null)
+        //{
+
+        //}
         public Repository(IDbContext context)
         {
             Context = context;

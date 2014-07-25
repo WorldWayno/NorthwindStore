@@ -30,6 +30,11 @@
             <param name="employeeId"></param>
             <returns></returns>
         </member>
+        <member name="T:Northwind.Api.Filters.AsyncLoggingFilter">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:Northwind.Api.Middleware.Token.ServerTokenAuthenticationProvider">
             <summary>
             
@@ -45,29 +50,29 @@
             
             </summary>
         </member>
-        <member name="T:Northwind.Api.Controllers.V1.OrdersController">
+        <member name="T:Northwind.Api.Controllers.OrdersController">
             <summary>
             </summary>
         </member>
-        <member name="M:Northwind.Api.Controllers.V1.OrdersController.#ctor(Northwind.Data.IRepository{Northwind.Model.Order})">
+        <member name="M:Northwind.Api.Controllers.OrdersController.#ctor(Northwind.Data.IRepository{Northwind.Model.Order})">
             <summary>
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:Northwind.Api.Controllers.V1.OrdersController.Get">
+        <member name="M:Northwind.Api.Controllers.OrdersController.Get">
             <summary>
                 Gets all orders
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Northwind.Api.Controllers.V1.OrdersController.Get(System.Int32)">
+        <member name="M:Northwind.Api.Controllers.OrdersController.Get(System.Int32)">
             <summary>
                 Gets an order by id
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Northwind.Api.Controllers.V1.OrdersController.Post(Northwind.Api.Models.OrderModel)">
+        <member name="M:Northwind.Api.Controllers.OrdersController.Post(Northwind.Api.Models.OrderModel)">
             <summary>
             </summary>
             <param name="order"></param>

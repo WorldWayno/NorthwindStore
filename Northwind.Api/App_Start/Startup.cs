@@ -10,6 +10,7 @@ using Microsoft.Owin.Cors;
 using Microsoft.Owin.Extensions;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using Northwind.Api.Filters;
 using Northwind.Api.Middleware.Token;
 using Northwind.Api.Repository;
 using Northwind.Api.Security;
@@ -49,8 +50,10 @@ namespace Northwind.Api.AppStart
 
             app.MapSignalR("/signalr", hubConfiguration);
 
-            HttpConfiguration.Services.Replace(typeof (IHttpControllerSelector), 
-                new VersionControllerSelector(HttpConfiguration));
+            //HttpConfiguration.Services.Replace(typeof (IHttpControllerSelector), 
+            //    new VersionControllerSelector(HttpConfiguration));
+
+            HttpConfiguration.Filters.Add(new AsyncLoggingFilter());
 
             SwaggerConfig.Register(HttpConfiguration);
 

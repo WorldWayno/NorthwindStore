@@ -10,12 +10,12 @@ using Northwind.Api.Models;
 using Northwind.Data;
 using Northwind.Model;
 
-namespace Northwind.Api.Controllers.V1
+namespace Northwind.Api.Controllers
 {
     /// <summary>
     /// </summary>
     //[Authorize]
-    [System.Web.Http.RoutePrefix("api/orders")]
+    [RoutePrefix("orders")]
     public class OrdersController : ApiController
     {
         private readonly IRepository<Order> _repository;
@@ -34,6 +34,7 @@ namespace Northwind.Api.Controllers.V1
         /// </summary>
         /// <returns></returns>
 
+        [Route("")]
         [HttpGet]
         public IEnumerable<Order> Get()
         {
@@ -61,6 +62,7 @@ namespace Northwind.Api.Controllers.V1
         /// <param name="order"></param>
         /// <returns></returns>
 
+        [Route("")]
         [HttpPost]
         public async Task<IHttpActionResult> Post([FromBody] OrderModel order)
         {

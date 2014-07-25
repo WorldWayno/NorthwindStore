@@ -14,7 +14,7 @@
     <RootNamespace>Northwind.Api</RootNamespace>
     <AssemblyName>Northwind.Api</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -170,6 +170,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.0\lib\net45\System.Web.Http.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Http.Tracing">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Tracing.5.2.0\lib\net45\System.Web.Http.Tracing.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
@@ -322,6 +325,7 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
+    <Compile Include="Filters\LoggingFilterAsync.cs" />
     <Compile Include="Middleware\Token\ServerTokenAuthenticationProvider.cs" />
     <Compile Include="Middleware\Token\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="App_Start\Startup.cs" />
@@ -390,7 +394,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>27478</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:27478/</IISUrl>
+          <IISUrl>http://northwindapi</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

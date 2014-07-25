@@ -10,6 +10,7 @@ using System.Web.Http.Description;
 
 namespace Northwind.Api.Controllers
 {
+    [RoutePrefix("employees")]
     public class EmployeesController : ApiController
     {
         private readonly NorthwindContext db = new NorthwindContext();
@@ -20,6 +21,9 @@ namespace Northwind.Api.Controllers
         /// </summary>
         /// <remarks>I like this remark</remarks>
         /// <returns><see cref="Employee"/></returns>
+        
+        [HttpGet]
+        [Route("")]
         public IQueryable<Employee> GetEmployees()
         {
             return db.Employees;
@@ -31,6 +35,8 @@ namespace Northwind.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns><see cref="Employee"/></returns>
+        
+        [Route("{id:int}")]
         [ResponseType(typeof (Employee))]
         public async Task<IHttpActionResult> GetEmployee(int id)
         {
@@ -44,6 +50,8 @@ namespace Northwind.Api.Controllers
         }
 
         // PUT: api/Employees/5
+        [HttpPut]
+        [Route("")]
         [ResponseType(typeof (void))]
         public async Task<IHttpActionResult> PutEmployee(int id, Employee employee)
         {
@@ -76,6 +84,8 @@ namespace Northwind.Api.Controllers
         }
 
         // POST: api/Employees
+        [HttpPost]
+        [Route("")]
         [ResponseType(typeof (Employee))]
         public async Task<IHttpActionResult> PostEmployee(Employee employee)
         {
@@ -91,6 +101,8 @@ namespace Northwind.Api.Controllers
         }
 
         // DELETE: api/Employees/5
+        [HttpDelete]
+        [Route("")]
         [ResponseType(typeof (Employee))]
         public async Task<IHttpActionResult> DeleteEmployee(int id)
         {
