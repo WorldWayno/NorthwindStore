@@ -20,6 +20,20 @@ namespace Northwind.Api
         {
             Swashbuckle.Bootstrapper.Init(config);
 
+            //     config.Routes.MapHttpRoute(
+            //    "swagger_versioned_api_docs",
+            //    "swagger/{apiVersion}/api-docs/{resourceName}",
+            //    new { resourceName = RouteParameter.Optional },
+            //    null,
+            //    new SwaggerSpecHandler());
+
+            //config.Routes.MapHttpRoute(
+            //    "swagger_api_docs",
+            //    "swagger/api-docs/{resourceName}",
+            //    new { resourceName = RouteParameter.Optional },
+            //    null,
+            //    new SwaggerSpecHandler());
+
             SwaggerSpecConfig.Customize(c =>
             {
                 c.IgnoreObsoleteActions();

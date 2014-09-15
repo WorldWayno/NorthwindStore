@@ -82,9 +82,33 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.1.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.0-rc\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -103,32 +127,8 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.2\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="WebApi.AuthenticationFilter">
       <HintPath>..\packages\WebApi.AuthenticationFilter.1.0.0.0\lib\net45\WebApi.AuthenticationFilter.dll</HintPath>
@@ -178,6 +178,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SwaggerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -187,10 +188,144 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\animate.min.css" />
+    <Content Include="Content\assets\blue.css" />
+    <Content Include="Content\assets\bootstrap.min.css" />
+    <Content Include="Content\assets\fonts\fontello.css" />
+    <Content Include="Content\assets\fonts\fontello\fontello-circle.svg" />
+    <Content Include="Content\assets\fonts\fontello\fontello-social.svg" />
+    <Content Include="Content\assets\fonts\fontello\fontello.svg" />
+    <Content Include="Content\assets\gray.css" />
+    <Content Include="Content\assets\green.css" />
+    <Content Include="Content\assets\images\art\client01.jpg" />
+    <Content Include="Content\assets\images\art\client02.jpg" />
+    <Content Include="Content\assets\images\art\client03.jpg" />
+    <Content Include="Content\assets\images\art\client04.jpg" />
+    <Content Include="Content\assets\images\art\client05.jpg" />
+    <Content Include="Content\assets\images\art\client06.jpg" />
+    <Content Include="Content\assets\images\art\client07.jpg" />
+    <Content Include="Content\assets\images\art\client08.jpg" />
+    <Content Include="Content\assets\images\art\client09.jpg" />
+    <Content Include="Content\assets\images\art\client10.jpg" />
+    <Content Include="Content\assets\images\art\client11.jpg" />
+    <Content Include="Content\assets\images\art\client12.jpg" />
+    <Content Include="Content\assets\images\art\human01.jpg" />
+    <Content Include="Content\assets\images\art\human02.jpg" />
+    <Content Include="Content\assets\images\art\human03.jpg" />
+    <Content Include="Content\assets\images\art\human04.jpg" />
+    <Content Include="Content\assets\images\art\human05.jpg" />
+    <Content Include="Content\assets\images\art\human06.jpg" />
+    <Content Include="Content\assets\images\art\humans01.jpg" />
+    <Content Include="Content\assets\images\art\image-background01.jpg" />
+    <Content Include="Content\assets\images\art\image-background02.jpg" />
+    <Content Include="Content\assets\images\art\image-background03.jpg" />
+    <Content Include="Content\assets\images\art\image-background04.jpg" />
+    <Content Include="Content\assets\images\art\office01.jpg" />
+    <Content Include="Content\assets\images\art\office02.jpg" />
+    <Content Include="Content\assets\images\art\office03.jpg" />
+    <Content Include="Content\assets\images\art\pattern-background01.jpg" />
+    <Content Include="Content\assets\images\art\pattern-background02.png" />
+    <Content Include="Content\assets\images\art\pattern-background03.png" />
+    <Content Include="Content\assets\images\art\photograph01-lg.jpg" />
+    <Content Include="Content\assets\images\art\photograph02.jpg" />
+    <Content Include="Content\assets\images\art\photograph03.jpg" />
+    <Content Include="Content\assets\images\art\photograph04-lg.jpg" />
+    <Content Include="Content\assets\images\art\product01.jpg" />
+    <Content Include="Content\assets\images\art\product02.jpg" />
+    <Content Include="Content\assets\images\art\product03.jpg" />
+    <Content Include="Content\assets\images\art\product04.jpg" />
+    <Content Include="Content\assets\images\art\product05.jpg" />
+    <Content Include="Content\assets\images\art\product06.jpg" />
+    <Content Include="Content\assets\images\art\screen-container.png" />
+    <Content Include="Content\assets\images\art\service01.jpg" />
+    <Content Include="Content\assets\images\art\slider01.jpg" />
+    <Content Include="Content\assets\images\art\slider02.jpg" />
+    <Content Include="Content\assets\images\art\slider03.jpg" />
+    <Content Include="Content\assets\images\art\slider04.jpg" />
+    <Content Include="Content\assets\images\art\slider05.jpg" />
+    <Content Include="Content\assets\images\art\slider06.jpg" />
+    <Content Include="Content\assets\images\art\work01-lg.jpg" />
+    <Content Include="Content\assets\images\art\work01.jpg" />
+    <Content Include="Content\assets\images\art\work02-lg.jpg" />
+    <Content Include="Content\assets\images\art\work02.jpg" />
+    <Content Include="Content\assets\images\art\work03.jpg" />
+    <Content Include="Content\assets\images\art\work04.jpg" />
+    <Content Include="Content\assets\images\art\work05.jpg" />
+    <Content Include="Content\assets\images\art\work05a.jpg" />
+    <Content Include="Content\assets\images\art\work06-lg.jpg" />
+    <Content Include="Content\assets\images\art\work06.jpg" />
+    <Content Include="Content\assets\images\art\work07.jpg" />
+    <Content Include="Content\assets\images\art\work08-lg.jpg" />
+    <Content Include="Content\assets\images\art\work08.jpg" />
+    <Content Include="Content\assets\images\art\work08a-lg.jpg" />
+    <Content Include="Content\assets\images\art\work08a.jpg" />
+    <Content Include="Content\assets\images\art\work08b-lg.jpg" />
+    <Content Include="Content\assets\images\art\work08b.jpg" />
+    <Content Include="Content\assets\images\art\work08c-lg.jpg" />
+    <Content Include="Content\assets\images\art\work08c.jpg" />
+    <Content Include="Content\assets\images\art\work08d-lg.jpg" />
+    <Content Include="Content\assets\images\art\work08d.jpg" />
+    <Content Include="Content\assets\images\art\work08e.jpg" />
+    <Content Include="Content\assets\images\art\work08f-lg.jpg" />
+    <Content Include="Content\assets\images\art\work08f.jpg" />
+    <Content Include="Content\assets\images\art\work08g-lg.jpg" />
+    <Content Include="Content\assets\images\art\work09-lg.jpg" />
+    <Content Include="Content\assets\images\art\work09.jpg" />
+    <Content Include="Content\assets\images\art\work10.jpg" />
+    <Content Include="Content\assets\images\art\work11.jpg" />
+    <Content Include="Content\assets\images\art\work12.jpg" />
+    <Content Include="Content\assets\images\art\work13.jpg" />
+    <Content Include="Content\assets\images\art\work14-lg.jpg" />
+    <Content Include="Content\assets\images\art\work15-lg.jpg" />
+    <Content Include="Content\assets\images\art\work15.jpg" />
+    <Content Include="Content\assets\images\art\work16-lg.jpg" />
+    <Content Include="Content\assets\images\art\work16.jpg" />
+    <Content Include="Content\assets\images\art\work17.jpg" />
+    <Content Include="Content\assets\images\art\work18.jpg" />
+    <Content Include="Content\assets\images\art\work19.jpg" />
+    <Content Include="Content\assets\images\art\work20.jpg" />
+    <Content Include="Content\assets\images\art\work21.jpg" />
+    <Content Include="Content\assets\images\art\work22.jpg" />
+    <Content Include="Content\assets\images\art\work23.jpg" />
+    <Content Include="Content\assets\images\art\work24.jpg" />
+    <Content Include="Content\assets\images\art\work25.jpg" />
+    <Content Include="Content\assets\images\favicon.ico" />
+    <Content Include="Content\assets\images\grabbing.png" />
+    <Content Include="Content\assets\images\logo-white.svg" />
+    <Content Include="Content\assets\images\logo.svg" />
+    <Content Include="Content\assets\images\scribe-logo.png" />
+    <Content Include="Content\assets\js\bootstrap-hover-dropdown.min.js" />
+    <Content Include="Content\assets\js\bootstrap.min.js" />
+    <Content Include="Content\assets\js\google.maps.api.v3.js" />
+    <Content Include="Content\assets\js\html5shiv.js" />
+    <Content Include="Content\assets\js\jquery.easing.1.3.min.js" />
+    <Content Include="Content\assets\js\jquery.easytabs.min.js" />
+    <Content Include="Content\assets\js\jquery.form.js" />
+    <Content Include="Content\assets\js\jquery.isotope.min.js" />
+    <Content Include="Content\assets\js\jquery.min.js" />
+    <Content Include="Content\assets\js\jquery.validate.min.js" />
+    <Content Include="Content\assets\js\owl.carousel.min.js" />
+    <Content Include="Content\assets\js\respond.min.js" />
+    <Content Include="Content\assets\js\scripts.js" />
+    <Content Include="Content\assets\js\skrollr.min.js" />
+    <Content Include="Content\assets\js\skrollr.stylesheets.min.js" />
+    <Content Include="Content\assets\js\viewport-units-buggyfill.js" />
+    <Content Include="Content\assets\js\waypoints-sticky.min.js" />
+    <Content Include="Content\assets\js\waypoints.min.js" />
+    <Content Include="Content\assets\main.css" />
+    <Content Include="Content\assets\navy.css" />
+    <Content Include="Content\assets\orange.css" />
+    <Content Include="Content\assets\owl.carousel.css" />
+    <Content Include="Content\assets\owl.transitions.css" />
+    <Content Include="Content\assets\pink.css" />
+    <Content Include="Content\assets\purple.css" />
+    <Content Include="Content\assets\red.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\reset.css" />
+    <Content Include="Content\swagger.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -200,12 +335,22 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Content\assets\images\Thumbs.db" />
+    <Content Include="Content\assets\fonts\fontello\fontello-.eot" />
+    <Content Include="Content\assets\fonts\fontello\fontello-circle.eot" />
+    <Content Include="Content\assets\fonts\fontello\fontello-circle.ttf" />
+    <Content Include="Content\assets\fonts\fontello\fontello-circle.woff" />
+    <Content Include="Content\assets\fonts\fontello\fontello-social-.eot" />
+    <Content Include="Content\assets\fonts\fontello\fontello-social.eot" />
+    <Content Include="Content\assets\fonts\fontello\fontello-social.ttf" />
+    <Content Include="Content\assets\fonts\fontello\fontello-social.woff" />
+    <Content Include="Content\assets\fonts\fontello\fontello.eot" />
+    <Content Include="Content\assets\fonts\fontello\fontello.ttf" />
+    <Content Include="Content\assets\fonts\fontello\fontello.woff" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -216,7 +361,24 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\swagger\swagger-ui.js" />
+    <Content Include="Scripts\swagger\backbone-min.js" />
+    <Content Include="Scripts\swagger\handlebars-1.0.0.js" />
+    <Content Include="Scripts\swagger\highlight.7.3.pack.js" />
+    <Content Include="Scripts\jquery-1.8.0.min.js" />
+    <Content Include="Scripts\swagger\jquery.ba-bbq.min.js" />
+    <Content Include="Scripts\swagger\jquery.slideto.min.js" />
+    <Content Include="Scripts\swagger\jquery.wiggle.min.js" />
+    <Content Include="Scripts\swagger\shred.bundle.js" />
+    <Content Include="Scripts\swagger\shred\content.js" />
+    <Content Include="Scripts\swagger\swagger-oauth.js" />
+    <Content Include="Scripts\swagger\swagger.js" />
+    <Content Include="Scripts\swagger\underscore-min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="swaggerui\index.html" />
+    <Content Include="swaggerui\o2c.html" />
+    <Content Include="swaggerui\swagger-ui.js" />
+    <Content Include="swaggerui\swagger-ui.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -228,24 +390,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Swagger\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

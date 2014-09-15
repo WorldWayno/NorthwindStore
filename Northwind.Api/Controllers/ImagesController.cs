@@ -22,7 +22,7 @@ using Northwind.Model;
 namespace Northwind.Api.Controllers
 {
     [RoutePrefix("api/images")]
-    //[ApiExplorerSettings(IgnoreApi = true)]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class ImagesController : ApiController
     {
         private readonly IRepository<Employee> _repository;

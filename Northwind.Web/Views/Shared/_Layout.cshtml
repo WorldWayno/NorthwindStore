@@ -1,44 +1,111 @@
 ﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>SCRIBE API</title>
+        @*<link href="//fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet" type="text/css" />*@
+        @*<link href="~/Content/reset.css" rel="stylesheet" media="screen" />
+        <link href="~/Content/reset.css" rel="stylesheet" media="print" />*@ 
+        <!-- Bootstrap Core CSS -->
+        <link href="~/Content/assets/bootstrap.min.css" rel="stylesheet" />
+        
+        <!-- Customizable CSS -->
+        <link href="~/Content/assets/main.css" rel="stylesheet" data-skrollr-stylesheet>
+        <link href="~/Content/assets/green.css" rel="stylesheet" title="Color">
+        <link href="~/Content/assets/owl.carousel.css" rel="stylesheet">
+        <link href="~/Content/assets/owl.transitions.css" rel="stylesheet">
+        <link href="~/Content/assets/animate.min.css" rel="stylesheet">
+        
+        <!-- Fonts -->
+        <link href="http://fonts.googleapis.com/css?family=Lato:400,900,300,700" rel="stylesheet">
+        <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet">
+        
+        <!-- Icons/Glyphs -->
+        <link href="~/Content/assets/fonts/fontello.css" rel="stylesheet">
 
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="~/Content/assets/images/favicon.ico">
+
+        <!-- HTML5 elements and media queries Support for IE8 : HTML5 shim and Respond.js -->
+        <!--[if lt IE 9]>
+        <script src="~/Content/assets/js/html5shiv.js"></script>
+        <script src="~/Content/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+        @RenderSection("head", required: false)
+    </head>
+    <body>
+        <header>
+            <div class="navbar">
+                <div class="navbar-header">
+                    <div class="container">
+
+                        <ul class="info pull-left">
+                            <li><a href="#"><i class="icon-mail-1 contact"></i> sales@scribesoft.com</a></li>
+                            <li><i class=" icon-phone contact"></i>1.603.622.5109 x1</li>
+                        </ul><!-- /.info -->
+
+                        <ul class="social pull-right">
+                            <li><a href="#"><i class="icon-s-facebook"></i></a></li>
+                            <li><a href="#"><i class="icon-s-twitter"></i></a></li>
+                        </ul><!-- /.social -->
+                        <!-- ============================================================= LOGO MOBILE ============================================================= -->
+
+                        <a class="navbar-brand" href="index.html"><img src="~/Content/assets/images/logo.svg" class="logo" alt=""></a>
+
+                        <!-- ============================================================= LOGO MOBILE : END ============================================================= -->
+
+                        <a class="btn responsive-menu pull-right" data-toggle="collapse" data-target=".navbar-collapse"><i class='icon-menu-1'></i></a>
+
+                    </div><!-- /.container -->
+                </div><!-- /.navbar-header -->
+                <div class="yamm">
+                    <div class="navbar-collapse collapse">
+                        <div class="container">
+                            <!-- ============================================================= LOGO ============================================================= -->
+
+                            <a class="navbar-brand" href="index.html"><img src="~/Content/assets/images/scribe-logo.png" class="logo" alt="Scribe"></a>
+
+                            <!-- ============================================================= LOGO : END ============================================================= -->
+                            <!-- ============================================================= MAIN NAVIGATION ============================================================= -->
+
+                            <ul class="nav navbar-nav">
+                                <li><a href="#">Documentation</a></li>
+                                <li>@Html.ActionLink("Endpoints", "Index", "Swagger")</li>
+                                <li><a href="#">Release Notes</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+        </header>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                  
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>
+        <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+        @RenderSection("scripts", required: false)
+    </body>
 </html>
