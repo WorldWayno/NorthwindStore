@@ -8,16 +8,14 @@
         <meta name="author" content="">
         <title>SCRIBE API</title>
         @*<link href="//fonts.googleapis.com/css?family=Droid+Sans:400,700" rel="stylesheet" type="text/css" />*@
-        @*<link href="~/Content/reset.css" rel="stylesheet" media="screen" />
-        <link href="~/Content/reset.css" rel="stylesheet" media="print" />*@ 
+        <link href="~/Content/reset.css" rel="stylesheet" media="screen" />
+        <link href="~/Content/reset.css" rel="stylesheet" media="print" /> 
         <!-- Bootstrap Core CSS -->
         <link href="~/Content/assets/bootstrap.min.css" rel="stylesheet" />
         
         <!-- Customizable CSS -->
         <link href="~/Content/assets/main.css" rel="stylesheet" data-skrollr-stylesheet>
-        <link href="~/Content/assets/green.css" rel="stylesheet" title="Color">
-        <link href="~/Content/assets/owl.carousel.css" rel="stylesheet">
-        <link href="~/Content/assets/owl.transitions.css" rel="stylesheet">
+        <link href="~/Content/assets/blue.css" rel="stylesheet" title="Color">
         <link href="~/Content/assets/animate.min.css" rel="stylesheet">
         
         <!-- Fonts -->
@@ -32,9 +30,9 @@
 
         <!-- HTML5 elements and media queries Support for IE8 : HTML5 shim and Respond.js -->
         <!--[if lt IE 9]>
-        <script src="~/Content/assets/js/html5shiv.js"></script>
-        <script src="~/Content/assets/js/respond.min.js"></script>
-    <![endif]-->
+        <script src="~/Scripts/theme/html5shiv.js"></script>
+        <script src="~/Scripts/theme/respond.min.js"></script>
+         <![endif]-->
 
         @RenderSection("head", required: false)
     </head>
@@ -55,7 +53,7 @@
                         </ul><!-- /.social -->
                         <!-- ============================================================= LOGO MOBILE ============================================================= -->
 
-                        <a class="navbar-brand" href="index.html"><img src="~/Content/assets/images/logo.svg" class="logo" alt=""></a>
+                        <a class="navbar-brand" href="http://scribesoft.com"><img src="~/Content/assets/images/scribe-logo.png" class="logo" alt=""></a>
 
                         <!-- ============================================================= LOGO MOBILE : END ============================================================= -->
 
@@ -68,13 +66,13 @@
                         <div class="container">
                             <!-- ============================================================= LOGO ============================================================= -->
 
-                            <a class="navbar-brand" href="index.html"><img src="~/Content/assets/images/scribe-logo.png" class="logo" alt="Scribe"></a>
+                            <a class="navbar-brand" href="http://scribesoft.com"><img src="~/Content/assets/images/scribe-logo.png" class="logo" alt="Scribe"></a>
 
                             <!-- ============================================================= LOGO : END ============================================================= -->
                             <!-- ============================================================= MAIN NAVIGATION ============================================================= -->
 
                             <ul class="nav navbar-nav">
-                                <li><a href="#">Documentation</a></li>
+                                <li><a href="#">Overview</a></li>
                                 <li>@Html.ActionLink("Endpoints", "Index", "Swagger")</li>
                                 <li><a href="#">Release Notes</a></li>
                             </ul>
@@ -83,29 +81,32 @@
                 </div>
             </div>
         </header>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                  
-                </div>
-            </div>
-        </div>
-        <div class="container body-content">
+        <!-- ============================================================= HEADER : END ============================================================= -->
+        <!-- ============================================================= MAIN ============================================================= -->
+        <main>
             @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>
-        </div>
+        </main>
+        <footer class="dark-bg">
+            <div class="footer-bottom">
+                <div class="container inner">
+                    <p class="pull-left">© 2014 SCRIBE. All rights reserved.</p>
+                    <ul class="footer-menu pull-right">
+                        <li><a href="#">Overview</a></li>
+                        <li><a href="#">Endpoints</a></li>
+                        <li><a href="#">Release Notes</a></li>
+                    </ul><!-- .footer-menu -->
+                </div><!-- .container -->
+            </div><!-- .footer-bottom -->
+        </footer>
+      
         <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+        <script src="~/Scripts/theme/skrollr.min.js"></script>
+        <script src="~/Scripts/theme/skrollr.stylesheets.min.js"></script>
+        <script src="~/Scripts/theme/waypoints.min.js"></script>
+        <script src="~/Scripts/theme/waypoints-sticky.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/theme/bootstrap-hover-dropdown.min.js"></script>
+        <script src="~/Scripts/theme/init.js"></script>
         @RenderSection("scripts", required: false)
     </body>
 </html>
