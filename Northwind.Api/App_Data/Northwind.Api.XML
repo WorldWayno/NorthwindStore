@@ -35,6 +35,17 @@
             
             </summary>
         </member>
+        <member name="M:Northwind.Api.Helpers.ApiHelper.AddPaginationToHeader``1(System.Collections.Generic.IEnumerable{``0},System.Web.Http.ApiController,System.Int32,System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="collection"></param>
+            <param name="context"></param>
+            <param name="page"></param>
+            <param name="pageSize"></param>
+            <typeparam name="TModel"></typeparam>
+            <returns></returns>
+        </member>
         <member name="T:Northwind.Api.Middleware.Token.ServerTokenAuthenticationProvider">
             <summary>
             
@@ -59,13 +70,13 @@
             </summary>
             <param name="repository"></param>
         </member>
-        <member name="M:Northwind.Api.Controllers.OrdersController.Get">
+        <member name="M:Northwind.Api.Controllers.OrdersController.Get(System.Int32,System.Int32)">
             <summary>
                 Gets all orders
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Northwind.Api.Controllers.OrdersController.Get(System.Int32)">
+        <member name="M:Northwind.Api.Controllers.OrdersController.GetById(System.Int32)">
             <summary>
                 Gets an order by id
             </summary>

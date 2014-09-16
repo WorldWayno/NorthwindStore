@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Northwind.Api.Helpers;
 using Northwind.Api.Models;
 using Northwind.Data;
 using Northwind.Model;
@@ -34,11 +35,12 @@ namespace Northwind.Api.Controllers
         /// </summary>
         /// <returns></returns>
 
-        [Route("")]
+        [Route("", Name = "Orders")]
         [HttpGet]
-        public IEnumerable<Order> Get()
+        public ICollection<Order> Get(int page = 0, int size = 100)
         {
-            IEnumerable<Order> orders = FetchOrders();
+            var orders = FetchOrders();
+            orders.AddPaginationToHeader(this, 1, 100);
             return orders;
         }
 
@@ -47,9 +49,10 @@ namespace Northwind.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpGet]
         [Route("{id:int}")]
         [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> Get(int id)
+        public async Task<IHttpActionResult> GetById(int id)
         {
             Order result = FetchOrders(o => o.OrderID == id).SingleOrDefault();
             if (result == null) return NotFound();
@@ -82,11 +85,11 @@ namespace Northwind.Api.Controllers
             return Created(Request.RequestUri, target);
         }
 
-        private IEnumerable<Order> FetchOrders(Expression<Func<Order, bool>> predicate = null)
+        private ICollection<Order> FetchOrders(Expression<Func<Order, bool>> predicate = null)
         {
-            if (predicate == null) return _repository.Queryable();
+            if (predicate == null) return _repository.Queryable().ToList();
 
-            return _repository.Queryable().Where(predicate);
+            return _repository.Queryable().Where(predicate).ToList();
         }
     }
 }
