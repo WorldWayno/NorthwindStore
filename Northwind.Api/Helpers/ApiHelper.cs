@@ -26,7 +26,8 @@ namespace Northwind.Api.Helpers
         public static ICollection<TModel> AddPaginationToHeader<TModel>(this IEnumerable<TModel> collection,
             ApiController controller, int page, int pageSize, string resource = null) where TModel : class
         {
-            var resourceName = resource ?? controller.ActionContext.ControllerContext.ControllerDescriptor.ControllerName;
+            var resourceName = resource ??
+                               controller.ActionContext.ControllerContext.ControllerDescriptor.ControllerName;
             var totalCount = collection.Count();
             var totalPages = (int) Math.Ceiling((double) totalCount/pageSize);
             var urlHelper = new UrlHelper(controller.Request);
@@ -43,8 +44,10 @@ namespace Northwind.Api.Helpers
                 NextPageLink = nextLink
             };
 
-            HttpContext.Current.Response.Headers
-                .Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(pagingHeader));
+            var response = HttpContext.Current.Response;
+
+            response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(pagingHeader));
+            response.Headers.Remove("X-Powered-By");
 
             return collection.Skip(pageSize*page).Take(pageSize).ToList();
         }
