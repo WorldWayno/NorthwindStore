@@ -5,8 +5,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 using System.Web.Http.Routing;
 using Northwind.Api.Controllers;
+using Northwind.Api.Models;
 using Northwind.Data;
 using Northwind.Model;
 
@@ -21,10 +23,10 @@ namespace Northwind.Api.Helpers
         /// <param name="context"></param>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
-        /// <typeparam name="TModel"></typeparam>
+        /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        public static ICollection<TModel> AddPaginationToHeader<TModel>(this IEnumerable<TModel> collection,
-            ApiController controller, int page, int pageSize, string resource = null) where TModel : class
+        public static ICollection<TEntity> AddPaginationToHeader<TEntity>(this IOrderedQueryable<TEntity> collection,
+            ApiController controller, int page, int pageSize, string resource = null) where TEntity : class 
         {
             var resourceName = resource ??
                                controller.ActionContext.ControllerContext.ControllerDescriptor.ControllerName;
@@ -47,7 +49,6 @@ namespace Northwind.Api.Helpers
             var response = HttpContext.Current.Response;
 
             response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(pagingHeader));
-            response.Headers.Remove("X-Powered-By");
 
             return collection.Skip(pageSize*page).Take(pageSize).ToList();
         }

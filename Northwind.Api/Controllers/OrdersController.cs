@@ -37,11 +37,10 @@ namespace Northwind.Api.Controllers
 
         [Route("", Name = "Orders")]
         [HttpGet]
-        public ICollection<Order> Get(int page = 0, int size = 100)
+        public ICollection<Order> Get(int page = 0, int size = 10)
         {
-            var orders = FetchOrders();
-            orders.AddPaginationToHeader(this, 1, 100);
-            return orders;
+            var orders = FetchOrders(o => o.OrderID > 100).OrderBy(o => o.CustomerID);
+            return orders.AddPaginationToHeader(this, page, size);
         }
 
         /// <summary>
@@ -85,11 +84,11 @@ namespace Northwind.Api.Controllers
             return Created(Request.RequestUri, target);
         }
 
-        private ICollection<Order> FetchOrders(Expression<Func<Order, bool>> predicate = null)
+        private IQueryable<Order> FetchOrders(Expression<Func<Order, bool>> predicate = null)
         {
-            if (predicate == null) return _repository.Queryable().ToList();
+            if (predicate == null) return _repository.Queryable();
 
-            return _repository.Queryable().Where(predicate).ToList();
+            return _repository.Queryable().Where(predicate);
         }
     }
 }

@@ -35,7 +35,7 @@
             
             </summary>
         </member>
-        <member name="M:Northwind.Api.Helpers.ApiHelper.AddPaginationToHeader``1(System.Collections.Generic.IEnumerable{``0},System.Web.Http.ApiController,System.Int32,System.Int32,System.String)">
+        <member name="M:Northwind.Api.Helpers.ApiHelper.AddPaginationToHeader``1(System.Linq.IOrderedQueryable{``0},System.Web.Http.ApiController,System.Int32,System.Int32,System.String)">
             <summary>
             
             </summary>
