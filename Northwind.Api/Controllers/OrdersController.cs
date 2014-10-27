@@ -15,7 +15,7 @@ namespace Northwind.Api.Controllers
 {
     /// <summary>
     /// </summary>
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("orders")]
     public class OrdersController : ApiController
     {

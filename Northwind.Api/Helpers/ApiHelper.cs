@@ -52,5 +52,11 @@ namespace Northwind.Api.Helpers
 
             return collection.Skip(pageSize*page).Take(pageSize).ToList();
         }
+
+        public static ICollection<TEntity> AddPaginationToHeader<TEntity>(this IEnumerable<TEntity> collection,
+            ApiController controller, int page, int pageSize, string resource = null) where TEntity : class
+        {
+            return collection.Skip(pageSize * page).Take(pageSize).ToList();
+        }
     }
 }
