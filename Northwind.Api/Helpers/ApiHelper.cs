@@ -16,6 +16,21 @@ namespace Northwind.Api.Helpers
 {
     public static class ApiHelper
     {
+        public static string GetClientIP(HttpRequest request = null)
+        {
+            if (request == null)
+                request = HttpContext.Current.Request;
+
+            string ipList = request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+            if (!string.IsNullOrEmpty(ipList))
+            {
+                return ipList.Split(',')[0];
+            }
+
+            return request.ServerVariables["REMOTE_ADDR"];
+        }
+
         /// <summary>
         /// 
         /// </summary>

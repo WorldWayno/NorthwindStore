@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net;
 using System.Web;
 using System.Web.Http.Description;
 using System.Web.Http.Dispatcher;
@@ -13,6 +14,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Northwind.Api.App_Start;
 using Northwind.Api.Filters;
+using Northwind.Api.Handlers;
 using Northwind.Api.Middleware.Token;
 using Northwind.Api.Repository;
 using Northwind.Api.Security;
@@ -25,6 +27,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 using SDammann.WebApi.Versioning;
+using WebApiThrottle;
 
 [assembly: OwinStartup(typeof(Northwind.Api.AppStart.Startup))]
 
@@ -57,6 +60,8 @@ namespace Northwind.Api.AppStart
 
             HttpConfiguration.Filters.Add(new AsyncLoggingFilter());
 
+            HttpConfiguration.MessageHandlers.Add(new HttpLoggingHandler());
+
             SwaggerConfig.Register(HttpConfiguration);
 
             //trace provider
@@ -74,16 +79,16 @@ namespace Northwind.Api.AppStart
 
             app.UseWebApi(HttpConfiguration);
 
-            //app.UseStageMarker(PipelineStage.MapHandler);
+            app.UseStageMarker(PipelineStage.MapHandler);
 
            
         }
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            //app.UseBasicAuthentication(new BasicAuthenticationOptions("demo", ValidateBasicUser));
+           app.UseBasicAuthentication(new BasicAuthenticationOptions("demo", ValidateBasicUser));
 
-            var OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            var oAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
@@ -93,7 +98,7 @@ namespace Northwind.Api.AppStart
             };
 
             // Token Generation
-            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+            app.UseOAuthAuthorizationServer(oAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
  
         }

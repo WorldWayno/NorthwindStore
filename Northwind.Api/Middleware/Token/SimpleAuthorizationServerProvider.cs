@@ -1,4 +1,5 @@
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Northwind.Api.Middleware.Token
     {
         public override Task ValidateAuthorizeRequest(OAuthValidateAuthorizeRequestContext context)
         {
+            Debug.Write("ValidateAuthorizeRequest");
             return base.ValidateAuthorizeRequest(context);
         }
 

@@ -40,6 +40,9 @@ namespace Northwind.Api.Controllers
         public ICollection<Order> Get(int page = 0, int size = 10)
         {
             var orders = FetchOrders(o => o.OrderID > 100).OrderBy(o => o.CustomerID);
+
+            throw new ApplicationException("testing");
+
             return orders.AddPaginationToHeader(this, page, size);
         }
 

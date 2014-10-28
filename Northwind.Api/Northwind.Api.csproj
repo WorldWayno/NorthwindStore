@@ -229,6 +229,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\dbo.AddHttpLog.sql" />
+    <Content Include="App_Data\dbo.ApiLog.sql" />
     <Content Include="Content\highlight.default.css" />
     <Content Include="Content\screen.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -337,6 +339,8 @@
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Filters\CustomThrottlingHandler.cs" />
     <Compile Include="Filters\LoggingFilterAsync.cs" />
+    <Compile Include="Handlers\HttpLoggingHandler.cs" />
+    <Compile Include="Handlers\HttpMessageHandler.cs" />
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\HttpExtensions.cs" />
     <Compile Include="Middleware\Token\SimpleAuthorizationServerProvider.cs" />
@@ -377,15 +381,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Controllers\odata\" />
-    <Folder Include="Handlers\" />
     <Folder Include="Views\Employees\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Northwind.Data\Northwind.Data.csproj">
       <Project>{465891fd-3437-44a0-8e64-53c688eb684b}</Project>
       <Name>Northwind.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Northwind.Logging\Northwind.Logging.csproj">
+      <Project>{36216c5f-d1e5-4705-a6af-153722ae8244}</Project>
+      <Name>Northwind.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Northwind.Model\Northwind.Model.csproj">
       <Project>{d919b5ce-52f5-4713-8a8b-ee063622d16b}</Project>
