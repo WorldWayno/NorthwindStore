@@ -1,4 +1,5 @@
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,20 +11,36 @@ namespace Northwind.Api.Middleware.Token
 {
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
+        public override Task ValidateAuthorizeRequest(OAuthValidateAuthorizeRequestContext context)
+        {
+            Debug.Write("ValidateAuthorizeRequest");
+            return base.ValidateAuthorizeRequest(context);
+        }
+
+        public override Task AuthorizeEndpoint(OAuthAuthorizeEndpointContext context)
+        {
+            return base.AuthorizeEndpoint(context);
+        }
+
+        public override Task ValidateTokenRequest(OAuthValidateTokenRequestContext context)
+        {
+            return base.ValidateTokenRequest(context);
+        }
+
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-            string id, secret;
-            if (context.TryGetBasicCredentials(out id, out secret))
-            {
-                using (var repo = new AuthRepository())
-                {
-                    IdentityUser user = await repo.FindUser(id, secret);
-                    if (user == null)
-                    {
-                        context.SetError("invalid_user");
-                    }
-                }
-            }
+            //string id, secret;
+            //if (context.TryGetBasicCredentials(out id, out secret))
+            //{
+            //    using (var repo = new AuthRepository())
+            //    {
+            //        IdentityUser user = await repo.FindUser(id, secret);
+            //        if (user == null)
+            //        {
+            //            context.SetError("invalid_user");
+            //        }
+            //    }
+            //}
             context.Validated();
         }
 
@@ -38,20 +55,17 @@ namespace Northwind.Api.Middleware.Token
                 if (user == null)
                 {
                     context.SetError("invalid_grant", "The user name or password is incorrect.");
-                }
-                else
-                {
-                    var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-                    identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
-                    var principal = new ClaimsPrincipal(identity);
-                    Thread.CurrentPrincipal = principal;
-                    context.Validated(identity);
+                    return;
                 }
             }
 
-            context.Validated();
+            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+            identity.AddClaim(new Claim("sub", context.UserName));
+            identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+            identity.AddClaim(new Claim("role", "user"));
+
+            context.Validated(identity);
+
 
         }
     }

@@ -1,7 +1,9 @@
 ﻿using System.IO;
+using System.Net;
 using System.Web;
 using System.Web.Http.Description;
 using System.Web.Http.Dispatcher;
+using System.Web.Http.Tracing;
 using System.Web.Routing;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.SignalR;
@@ -10,7 +12,9 @@ using Microsoft.Owin.Cors;
 using Microsoft.Owin.Extensions;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using Northwind.Api.App_Start;
 using Northwind.Api.Filters;
+using Northwind.Api.Handlers;
 using Northwind.Api.Middleware.Token;
 using Northwind.Api.Repository;
 using Northwind.Api.Security;
@@ -22,8 +26,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Mvc;
 using SDammann.WebApi.Versioning;
+using WebApiThrottle;
 
 [assembly: OwinStartup(typeof(Northwind.Api.AppStart.Startup))]
 
@@ -37,6 +41,7 @@ namespace Northwind.Api.AppStart
            HttpConfiguration = new HttpConfiguration();
             // force token authentication
            HttpConfiguration.SuppressDefaultHostAuthentication();
+           HttpConfiguration.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             ConfigureOAuth(app);
 
@@ -55,7 +60,20 @@ namespace Northwind.Api.AppStart
 
             HttpConfiguration.Filters.Add(new AsyncLoggingFilter());
 
+            HttpConfiguration.MessageHandlers.Add(new HttpLoggingHandler());
+
             SwaggerConfig.Register(HttpConfiguration);
+
+            //trace provider
+            //var traceWriter = new SystemDiagnosticsTraceWriter()
+            //{
+            //    IsVerbose = true
+            //};
+
+            //HttpConfiguration.Services.Replace(typeof(ITraceWriter), traceWriter);
+            //HttpConfiguration.EnableSystemDiagnosticsTracing();
+
+            //ThrottleConfig.Register(HttpConfiguration);
 
             WebApiConfig.Register(HttpConfiguration);
 
@@ -68,30 +86,21 @@ namespace Northwind.Api.AppStart
 
         public void ConfigureOAuth(IAppBuilder app)
         {
+           app.UseBasicAuthentication(new BasicAuthenticationOptions("demo", ValidateBasicUser));
+
             var oAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
+                AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(20),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = new SimpleAuthorizationServerProvider(),
-                AuthenticationMode = AuthenticationMode.Passive,
-                AllowInsecureHttp = true
+                ApplicationCanDisplayErrors = true
             };
 
             // Token Generation
             app.UseOAuthAuthorizationServer(oAuthServerOptions);
-
-            //app.SetDefaultSignInAsAuthenticationType("Basic");
-            app.UseBasicAuthentication(new BasicAuthenticationOptions("demo", ValidateBasicUser));
-
-            app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions()
-            {
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(20),
-                TokenEndpointPath = new PathString("/bearer"),
-                Provider = new OAuthAuthorizationServerProvider(),
-                AllowInsecureHttp = true
-            });
-
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+ 
         }
 
         private async Task<IEnumerable<Claim>> ValidateBasicUser(string username, string password)

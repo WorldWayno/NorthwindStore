@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -13,6 +12,7 @@ using System.Web.Http.Filters;
 using Microsoft.Owin;
 using Microsoft.Practices.Unity;
 using Northwind.Data;
+using Northwind.Logging;
 using Northwind.Model;
 
 namespace Northwind.Api.Filters
@@ -22,6 +22,8 @@ namespace Northwind.Api.Filters
     /// </summary>
     public class AsyncLoggingFilter : ActionFilterAttribute
     {
+     
+
         public override async Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
             var controller = actionContext.ControllerContext.ControllerDescriptor.ControllerName;

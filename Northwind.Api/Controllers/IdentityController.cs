@@ -5,10 +5,11 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Northwind.Api.Helpers;
 
 namespace Northwind.Api.Controllers
 {
-    [Authorize]
+
     [ApiExplorerSettings(IgnoreApi = true)]
     public class IdentityController : ApiController
     {
@@ -17,7 +18,7 @@ namespace Northwind.Api.Controllers
             var principal = User as ClaimsPrincipal;
             if (principal == null) return BadRequest("principal not found");
 
-            return Ok(principal.Claims); 
+            return Ok(Request.GetClientIp().ToString()); 
         }
     }
 }

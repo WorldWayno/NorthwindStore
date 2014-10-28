@@ -25,6 +25,9 @@ namespace Northwind.Api
             // OData support
             config.AddODataQueryFilter();
 
+            // BSON support
+            config.Formatters.Add(new BsonMediaTypeFormatter());
+
             // Routes
             //config.Routes.MapHttpRoute(
             //    name: "VersionedtApi",

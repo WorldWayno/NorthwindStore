@@ -16,6 +16,21 @@ namespace Northwind.Api.Helpers
 {
     public static class ApiHelper
     {
+        public static string GetClientIP(HttpRequest request = null)
+        {
+            if (request == null)
+                request = HttpContext.Current.Request;
+
+            string ipList = request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+            if (!string.IsNullOrEmpty(ipList))
+            {
+                return ipList.Split(',')[0];
+            }
+
+            return request.ServerVariables["REMOTE_ADDR"];
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -51,6 +66,12 @@ namespace Northwind.Api.Helpers
             response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(pagingHeader));
 
             return collection.Skip(pageSize*page).Take(pageSize).ToList();
+        }
+
+        public static ICollection<TEntity> AddPaginationToHeader<TEntity>(this IEnumerable<TEntity> collection,
+            ApiController controller, int page, int pageSize, string resource = null) where TEntity : class
+        {
+            return collection.Skip(pageSize * page).Take(pageSize).ToList();
         }
     }
 }
